@@ -1,0 +1,234 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const files = await Astro.glob('../../content/projects/*.md');
+  return files.map(f => ({
+    params: { slug: f.file.split('/').pop()?.replace('.md', '') },
+    props: { post: f },
+  }));
+}
+
+const { post } = Astro.props;
+const { frontmatter, Content } = post;
+---
+
+<BaseLayout title={`${frontmatter.title} — [SYSTEM]`} description={frontmatter.description}>
+  <div class="container page-wrap">
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+      <a href="/">~/</a>
+      <span class="bc-sep">/</span>
+      <a href="/#projects">projects</a>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">{frontmatter.slug ?? Astro.params.slug}</span>
+    </nav>
+
+    <!-- Header card -->
+    <div class="post-header">
+      <div class="post-header-gutter">
+        <div class="gutter-line"></div>
+        <span class="gutter-type">PRJ</span>
+      </div>
+      <div class="post-header-body">
+        <div class="post-meta-top">
+          <span class="post-date">{new Date(frontmatter.date).toISOString().slice(0, 10)}</span>
+          {frontmatter.status && (
+            <span class={`tag ${frontmatter.status === 'active' ? 'green' : frontmatter.status === 'wip' ? 'amber' : ''}`}>
+              ● {frontmatter.status}
+            </span>
+          )}
+        </div>
+
+        <h1 class="post-title">{frontmatter.title}</h1>
+        <p class="post-description">{frontmatter.description}</p>
+
+        <div class="post-tags">
+          {frontmatter.tags?.map((tag: string) => (
+            <span class="tag">{tag}</span>
+          ))}
+        </div>
+
+        {frontmatter.url && (
+          <div class="post-links">
+            <a href={frontmatter.url} target="_blank" class="btn">
+              ↗ VIEW PROJECT
+            </a>
+          </div>
+        )}
+        {frontmatter.github && (
+          <div class="post-links">
+            <a href={frontmatter.github} target="_blank" class="btn">
+              ⌥ GITHUB REPO
+            </a>
+          </div>
+        )}
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="content-divider">
+      <span>◈</span>
+      <span class="divider-label">BEGIN TRANSMISSION</span>
+      <span>◈</span>
+    </div>
+
+    <!-- Content -->
+    <article class="prose content-area">
+      <Content />
+    </article>
+
+    <!-- Back link -->
+    <div class="back-nav">
+      <a href="/#projects" class="btn">← RETURN TO INDEX</a>
+    </div>
+
+  </div>
+</BaseLayout>
+
+<style>
+.page-wrap {
+  padding-top: 3rem;
+  padding-bottom: 5rem;
+}
+
+.breadcrumb {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  color: var(--text-dim);
+  margin-bottom: 2.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+.breadcrumb a { color: var(--text-secondary); }
+.breadcrumb a:hover { color: var(--accent-cyan); }
+.bc-sep { color: var(--text-dim); }
+.bc-current { color: var(--accent-cyan); }
+
+/* Header */
+.post-header {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 3rem;
+  border: 1px solid var(--border-dim);
+  background: var(--bg-panel);
+  padding: 2rem;
+  position: relative;
+}
+
+.post-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--accent-cyan), var(--accent-orange), transparent);
+}
+
+.post-header-gutter {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding-top: 4px;
+}
+
+.gutter-line {
+  width: 1px;
+  flex: 1;
+  background: linear-gradient(to bottom, var(--accent-cyan), transparent);
+}
+
+.gutter-type {
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  color: var(--text-dim);
+  writing-mode: vertical-rl;
+  text-orientation: mixed;
+  transform: rotate(180deg);
+  padding-bottom: 4px;
+}
+
+.post-header-body { flex: 1; }
+
+.post-meta-top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.post-date {
+  font-size: 0.7rem;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+}
+
+.post-title {
+  font-size: clamp(1.4rem, 4vw, 2.2rem);
+  line-height: 1.1;
+  letter-spacing: 0.06em;
+  color: var(--text-bright);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+}
+
+.post-description {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.8;
+  max-width: 60ch;
+  margin-bottom: 1.2rem;
+}
+
+.post-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 1.5rem;
+}
+
+.post-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Divider */
+.content-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 2.5rem 0;
+  color: var(--text-dim);
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+}
+
+.divider-label {
+  white-space: nowrap;
+  color: var(--accent-orange);
+}
+
+.content-divider::before,
+.content-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-dim);
+}
+
+/* Content */
+.content-area {
+  padding-left: 2rem;
+  border-left: 1px solid var(--border-dim);
+}
+
+/* Back nav */
+.back-nav {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border-dim);
+}
+</style>
