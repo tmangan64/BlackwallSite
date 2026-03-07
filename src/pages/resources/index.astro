@@ -1,0 +1,53 @@
+---
+// src/pages/resources/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('resources', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+// Group by type
+const grouped = entries.reduce((acc, entry) => {
+  const type = entry.data.type ?? 'other';
+  if (!acc[type]) acc[type] = [];
+  acc[type].push(entry);
+  return acc;
+}, {} as Record<string, typeof entries>);
+---
+
+<BaseLayout title="Resources" section="resources">
+  <div class="page-header">
+    <h1>Resources</h1>
+    <p class="meta">{entries.length} {entries.length === 1 ? 'entry' : 'entries'}</p>
+  </div>
+
+  {Object.entries(grouped).sort().map(([type, items]) => (
+    <div style="margin-bottom: 2.5rem;">
+      <div class="section-label">{type}</div>
+      <ul class="index-list">
+        {items.map(entry => (
+          <li style="display: block; padding: 1rem 0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+              <a href={entry.data.url ?? `/resources/${entry.slug}`}
+                 target={entry.data.url ? '_blank' : undefined}
+                 rel={entry.data.url ? 'noopener' : undefined}>
+                <span class="item-title">{entry.data.title}</span>
+              </a>
+              {entry.data.url && (
+                <span class="item-meta" style="font-size: 0.68rem; opacity: 0.5;">↗</span>
+              )}
+            </div>
+            {entry.data.description && (
+              <p class="text-dim" style="margin-top: 0.3rem; margin-bottom: 0; font-size: 0.82rem;">
+                {entry.data.description}
+              </p>
+            )}
+            <div style="margin-top: 0.4rem;">
+              {entry.data.tags.map(tag => <span class="tag">{tag}</span>)}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</BaseLayout>

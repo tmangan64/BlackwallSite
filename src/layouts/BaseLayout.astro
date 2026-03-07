@@ -1,292 +1,66 @@
 ---
+// src/layouts/BaseLayout.astro
 import '../styles/global.css';
 
 interface Props {
-  title: string;
+  title?: string;
   description?: string;
+  section?: string;
 }
 
-const { title, description = 'Personal projects and research log.' } = Astro.props;
+const { title, description = 'A platform for sharing knowledge, projects, and media.', section } = Astro.props;
+const siteTitle = 'BLACKWALL';
+const fullTitle = title ? `${title} — ${siteTitle}` : siteTitle;
+
+const navItems = [
+  { href: '/about', label: 'About' },
+  { href: '/knowledge', label: 'Knowledge' },
+  { href: '/articles', label: 'Articles' },
+  { href: '/projects', label: 'Projects' },
+  { href: '/resources', label: 'Resources' },
+];
+
+const currentPath = Astro.url.pathname;
 ---
+
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={description} />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-  <title>{title}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{fullTitle}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <div class="site-wrapper">
+      <header class="site-header">
+        <div class="site-title">
+          <a href="/">{siteTitle}</a>
+        </div>
+        <nav class="site-nav" aria-label="Main navigation">
+          {navItems.map(item => (
+            <a
+              href={item.href}
+              class={currentPath.startsWith(item.href) ? 'active' : ''}
+              aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+      </header>
 
-  <!-- Preload fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-</head>
-<body>
-  <div class="site-bg" aria-hidden="true"></div>
+      <main class="page-content">
+        <slot />
+      </main>
 
-  <div class="site-wrapper">
-    <!-- Top status bar -->
-    <div class="status-bar">
-      <div class="container status-inner">
-        <span class="status-item">
-          <span class="status-dot active"></span>
-          SYS.ONLINE
-        </span>
-        <span class="status-item secondary">
-          NODE_ID: <span class="highlight-cyan">0x4A7F</span>
-        </span>
-        <span class="status-item secondary hide-mobile">
-          UPTIME: <span id="uptime">00:00:00</span>
-        </span>
-        <span class="status-spacer"></span>
-        <span class="status-item secondary hide-mobile">
-          <span class="highlight-amber">▲ SIGNAL NOMINAL</span>
-        </span>
-      </div>
+      <footer class="site-footer">
+        <p>
+          {new Date().getFullYear()} — built with intention in Astro
+          <span style="margin-left: 1rem; color: var(--border-light);">Ξ</span>
+        </p>
+      </footer>
     </div>
-
-    <!-- Main nav -->
-    <nav class="site-nav">
-      <div class="container nav-inner">
-        <a href="/" class="nav-logo">
-          <span class="logo-bracket">[</span>
-          <span class="logo-text glitch">SYSTEM</span>
-          <span class="logo-bracket">]</span>
-        </a>
-        <div class="nav-links">
-          <a href="/" class="nav-link">
-            <span class="nav-prefix">/</span>home
-          </a>
-          <a href="/#projects" class="nav-link">
-            <span class="nav-prefix">/</span>projects
-          </a>
-          <a href="/#articles" class="nav-link">
-            <span class="nav-prefix">/</span>articles
-          </a>
-        </div>
-      </div>
-    </nav>
-
-    <!-- Page content -->
-    <main>
-      <slot />
-    </main>
-
-    <!-- Footer -->
-    <footer class="site-footer">
-      <div class="container footer-inner">
-        <div class="footer-grid">
-          <div class="footer-col">
-            <div class="footer-label">// NETWORK STATUS</div>
-            <div class="footer-item">
-              <span class="status-dot active small"></span>
-              UPLINK ESTABLISHED
-            </div>
-            <div class="footer-item dim">SECTOR: PUBLIC ACCESS</div>
-          </div>
-          <div class="footer-col">
-            <div class="footer-label">// TRANSMIT TO</div>
-            <div class="footer-item">
-              <a href="https://github.com" target="_blank">[ GITHUB ]</a>
-            </div>
-          </div>
-          <div class="footer-col footer-right">
-            <div class="footer-label">// SYSTEM LOG</div>
-            <div class="footer-item dim" id="footer-timestamp">--:--:-- UTC</div>
-            <div class="footer-item dim">EOF — ALL CLEAR</div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="footer-line"></div>
-          <div class="footer-copy">
-            <span class="text-dim">© <span id="year">2024</span> — UNAUTHORIZED DISTRIBUTION PROHIBITED — </span>
-            <span class="highlight-cyan">ACCESS LOG MAINTAINED</span>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-
-  <script>
-    // Uptime counter
-    const start = Date.now();
-    function updateUptime() {
-      const elapsed = Date.now() - start;
-      const h = Math.floor(elapsed / 3600000).toString().padStart(2, '0');
-      const m = Math.floor((elapsed % 3600000) / 60000).toString().padStart(2, '0');
-      const s = Math.floor((elapsed % 60000) / 1000).toString().padStart(2, '0');
-      const el = document.getElementById('uptime');
-      if (el) el.textContent = `${h}:${m}:${s}`;
-    }
-    setInterval(updateUptime, 1000);
-
-    // Timestamp
-    function updateTimestamp() {
-      const now = new Date();
-      const ts = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
-      const el = document.getElementById('footer-timestamp');
-      if (el) el.textContent = ts;
-    }
-    updateTimestamp();
-    setInterval(updateTimestamp, 1000);
-
-    // Year
-    const yearEl = document.getElementById('year');
-    if (yearEl) yearEl.textContent = new Date().getFullYear().toString();
-  </script>
-</body>
+  </body>
 </html>
-
-<style>
-/* ─── STATUS BAR ─── */
-.status-bar {
-  border-bottom: 1px solid var(--border-dim);
-  background: rgba(0,0,0,0.4);
-  backdrop-filter: blur(4px);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.status-inner {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
-  height: 32px;
-  font-size: 0.65rem;
-  letter-spacing: 0.12em;
-  font-family: var(--font-mono);
-  text-transform: uppercase;
-}
-
-.status-item { display: flex; align-items: center; gap: 0.4rem; color: var(--text-secondary); }
-.status-spacer { flex: 1; }
-
-.status-dot {
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--text-dim);
-}
-.status-dot.active {
-  background: var(--accent-green);
-  box-shadow: var(--glow-green);
-  animation: pulse-dot 2s ease infinite;
-}
-.status-dot.small { width: 5px; height: 5px; }
-
-@keyframes pulse-dot {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.5; }
-}
-
-@media (max-width: 640px) { .hide-mobile { display: none; } }
-
-/* ─── NAV ─── */
-.site-nav {
-  border-bottom: 1px solid var(--border-dim);
-  background: rgba(4, 12, 20, 0.8);
-  backdrop-filter: blur(8px);
-  padding: 0.9rem 0;
-}
-
-.nav-inner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-}
-
-.nav-logo {
-  font-family: var(--font-display);
-  font-size: 1rem;
-  font-weight: 900;
-  letter-spacing: 0.2em;
-  color: var(--text-bright);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0;
-}
-.logo-bracket { color: var(--accent-orange); }
-.logo-text { color: var(--accent-cyan); padding: 0 4px; }
-
-.nav-links {
-  display: flex;
-  gap: 2rem;
-}
-
-.nav-link {
-  font-size: 0.72rem;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-secondary);
-  transition: color 0.2s;
-  display: flex;
-  align-items: center;
-}
-
-.nav-prefix { color: var(--accent-orange); margin-right: 1px; }
-
-.nav-link:hover {
-  color: var(--accent-cyan);
-  text-shadow: var(--glow-cyan);
-}
-
-/* ─── FOOTER ─── */
-.site-footer {
-  margin-top: 6rem;
-  border-top: 1px solid var(--border-dim);
-  padding: 2.5rem 0 2rem;
-}
-
-.footer-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 2rem;
-  margin-bottom: 2rem;
-}
-
-@media (max-width: 640px) {
-  .footer-grid { grid-template-columns: 1fr; }
-  .footer-right { text-align: left; }
-}
-
-.footer-label {
-  font-size: 0.65rem;
-  color: var(--accent-orange);
-  letter-spacing: 0.15em;
-  margin-bottom: 0.7rem;
-  text-transform: uppercase;
-}
-
-.footer-item {
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin-bottom: 0.3rem;
-}
-
-.footer-item a {
-  color: var(--accent-cyan);
-  transition: text-shadow 0.2s;
-}
-.footer-item a:hover { text-shadow: var(--glow-cyan); }
-.footer-item.dim { color: var(--text-dim); }
-
-.footer-right { text-align: right; }
-.footer-right .footer-item { justify-content: flex-end; }
-
-.footer-line {
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-mid), transparent);
-  margin-bottom: 1rem;
-}
-
-.footer-copy {
-  font-size: 0.62rem;
-  letter-spacing: 0.1em;
-  text-align: center;
-}
-</style>

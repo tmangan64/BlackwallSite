@@ -1,0 +1,35 @@
+---
+// src/layouts/EntryLayout.astro
+import BaseLayout from './BaseLayout.astro';
+
+interface Props {
+  title: string;
+  description?: string;
+  date?: string;
+  tags?: string[];
+  section: string;
+  sectionHref: string;
+}
+
+const { title, description, date, tags = [], section, sectionHref } = Astro.props;
+---
+
+<BaseLayout title={title} description={description} section={section}>
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href={sectionHref} class="text-dim mono" style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase; border: none;">
+        ← {section}
+      </a>
+    </div>
+    <h1 style="margin-top: 0.8rem;">{title}</h1>
+    {description && <p class="text-dim" style="margin-top: 0.4rem; font-size: 0.85rem;">{description}</p>}
+    <div class="meta" style="margin-top: 0.8rem; display: flex; flex-wrap: wrap; gap: 0.5rem; align-items: center;">
+      {date && <span>{date}</span>}
+      {tags.map(tag => <span class="tag">{tag}</span>)}
+    </div>
+  </div>
+
+  <div class="prose">
+    <slot />
+  </div>
+</BaseLayout>

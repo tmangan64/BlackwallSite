@@ -1,84 +1,63 @@
-# [SYSTEM] — Personal Site
+# my-site
 
-A cyberpunk/retrofuturist terminal-aesthetic personal site built with [Astro](https://astro.build).
+A personal wiki and knowledge platform built with [Astro](https://astro.build).
+Inspired by the design philosophy of [Hundred Rabbits](https://100r.co).
 
-## Quick Start
+## Setup
 
 ```bash
 npm install
-npm run dev        # http://localhost:4321
-npm run build      # output → ./dist
+npm run dev       # localhost:4321
+npm run build     # static output to ./dist
+npm run preview   # preview the build
 ```
 
-## Structure
+## Adding content
 
-```
-src/
-├── content/
-│   ├── projects/   ← .md files, one per project
-│   └── blog/       ← .md files, one per article
-├── layouts/
-│   └── BaseLayout.astro
-├── pages/
-│   ├── index.astro
-│   ├── projects/[slug].astro
-│   └── blog/[slug].astro
-└── styles/
-    └── global.css
-```
+All content lives in `src/content/`. Each section is a collection:
 
-## Adding Content
+| Section | Directory | Fields |
+|---------|-----------|--------|
+| Knowledge | `src/content/knowledge/` | title, description, date, tags |
+| Articles | `src/content/articles/` | title, description, date, tags |
+| Projects | `src/content/projects/` | title, description, date, tags, status, url |
+| Resources | `src/content/resources/` | title, description, tags, url, type |
 
-### New Project
-
-Create `src/content/projects/my-project.md`:
+### Example frontmatter
 
 ```md
 ---
-title: "My Project"
-description: "Short description shown in the card."
-date: "2025-01-01"
-tags: ["tag1", "tag2"]
-status: "active"       # active | stable | wip | archived
-github: "https://github.com/..."
-url: "https://..."
+title: Your Title Here
+description: One sentence description.
+date: 2024-03-01
+tags: [tag1, tag2]
 ---
 
-Your markdown content here.
+Content in Markdown here.
 ```
 
-### New Article
+### Projects
 
-Create `src/content/blog/my-article.md`:
+Projects have an additional `status` field: `active`, `complete`, or `archived`.
 
-```md
----
-title: "My Article"
-description: "Short description shown in the list."
-date: "2025-01-01"
-tags: ["tag1", "tag2"]
----
+### Resources
 
-Your markdown content here.
-```
+Resources have a `type` field (e.g. `website`, `software`, `book`, `tool`) which groups entries on the index page. If a `url` is provided, the resource card links directly to it.
 
-## Deploy to GitHub Pages
+### Drafts
 
-1. Push this repo to GitHub
-2. Go to **Settings → Pages → Source → GitHub Actions**
-3. The `.github/workflows/deploy.yml` workflow handles the rest
+Set `draft: true` in frontmatter to hide an entry from all pages.
 
-Update `astro.config.mjs` with your actual site URL:
+## Customisation
 
-```js
-export default defineConfig({
-  site: 'https://yourusername.github.io',
-  base: '/',   // or '/repo-name/' if deploying to a project page
-});
-```
+- **Site title**: edit `src/layouts/BaseLayout.astro`, change `const siteTitle`
+- **About text**: edit `src/pages/about.astro`
+- **Colours / typography**: edit `src/styles/global.css`
+- **Nav items**: edit the `navItems` array in `src/layouts/BaseLayout.astro`
 
-## Customization
+## Design
 
-- **Identity**: Edit the `SYSTEM` logo text and `NODE_ID` in `BaseLayout.astro`
-- **Colors**: CSS variables in `src/styles/global.css` under `:root`
-- **Fonts**: Currently using `Share Tech Mono`, `Orbitron`, and `VT323` from Google Fonts
+Monochrome, text-first, wiki-style.
+IBM Plex Mono + IBM Plex Sans.
+No JavaScript required for reading.
+No tracking. No analytics.

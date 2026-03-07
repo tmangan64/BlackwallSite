@@ -1,0 +1,52 @@
+---
+// src/pages/about.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="About" section="about">
+  <div class="page-header">
+    <h1>About</h1>
+  </div>
+
+  <div class="prose">
+    <p>
+      This site is a living document — a platform for collecting work, sharing knowledge,
+      and maintaining a record of ongoing projects and interests.
+    </p>
+
+    <p>
+      It is built to be lightweight, readable, and functional without JavaScript.
+      No tracking. No accounts. No ads.
+    </p>
+
+    <h2>Structure</h2>
+
+    <p>
+      The site is organised into five sections:
+    </p>
+
+    <ul>
+      <li><a href="/knowledge">Knowledge</a> — reference notes on topics worth documenting</li>
+      <li><a href="/articles">Articles</a> — longer-form writing and essays</li>
+      <li><a href="/projects">Projects</a> — current and past work</li>
+      <li><a href="/resources">Resources</a> — tools, sites, and materials worth knowing</li>
+      <li><a href="/about">About</a> — this page</li>
+    </ul>
+
+    <h2>Philosophy</h2>
+
+    <p>
+      Inspired by the wiki format of <a href="https://100r.co" target="_blank" rel="noopener">Hundred Rabbits</a>
+      and the personal sites of the indie web. The goal is a site that accumulates useful signal
+      over time, without becoming noise.
+    </p>
+
+    <h2>Technical</h2>
+
+    <p>
+      Built with <a href="https://astro.build" target="_blank" rel="noopener">Astro</a>.
+      Content written in Markdown. Deployed as static HTML.
+      The full source is available on request.
+    </p>
+  </div>
+</BaseLayout>

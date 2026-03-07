@@ -1,0 +1,54 @@
+---
+// src/pages/knowledge/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('knowledge', ({ data }) => !data.draft))
+  .sort((a, b) => a.data.title.localeCompare(b.data.title));
+
+// Group by first letter for alphabetical index
+const grouped = entries.reduce((acc, entry) => {
+  const letter = entry.data.title[0].toUpperCase();
+  if (!acc[letter]) acc[letter] = [];
+  acc[letter].push(entry);
+  return acc;
+}, {} as Record<string, typeof entries>);
+
+const allTags = [...new Set(entries.flatMap(e => e.data.tags))].sort();
+---
+
+<BaseLayout title="Knowledge" section="knowledge">
+  <div class="page-header">
+    <h1>Knowledge</h1>
+    <p class="meta">
+      {entries.length} {entries.length === 1 ? 'entry' : 'entries'}
+    </p>
+  </div>
+
+  {allTags.length > 0 && (
+    <div style="margin-bottom: 2rem;">
+      {allTags.map(tag => <span class="tag">{tag}</span>)}
+    </div>
+  )}
+
+  {Object.entries(grouped).sort().map(([letter, items]) => (
+    <div style="margin-bottom: 1.5rem;">
+      <div class="section-label">{letter}</div>
+      <ul class="index-list">
+        {items.map(entry => (
+          <li>
+            <a href={`/knowledge/${entry.slug}`}>
+              <span class="item-title">{entry.data.title}</span>
+              {entry.data.description && (
+                <span class="text-dim" style="display: block; font-size: 0.78rem; font-family: var(--font-sans); margin-top: 0.15rem;">
+                  {entry.data.description}
+                </span>
+              )}
+            </a>
+            <span class="item-meta">{entry.data.tags.join(', ')}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</BaseLayout>

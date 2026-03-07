@@ -1,0 +1,53 @@
+---
+// src/pages/projects/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const entries = (await getCollection('projects', ({ data }) => !data.draft))
+  .sort((a, b) => (b.data.date ?? '').localeCompare(a.data.date ?? ''));
+
+const active = entries.filter(e => e.data.status === 'active');
+const wip = entries.filter(e => e.data.status === 'wip');
+const complete = entries.filter(e => e.data.status === 'complete');
+const archived = entries.filter(e => e.data.status === 'archived');
+
+const groups = [
+  { label: 'Active', items: active },
+  { label: 'Work in Progress', items: wip },
+  { label: 'Complete', items: complete },
+  { label: 'Archived', items: archived },
+].filter(g => g.items.length > 0);
+---
+
+<BaseLayout title="Projects" section="projects">
+  <div class="page-header">
+    <h1>Projects</h1>
+    <p class="meta">{entries.length} total</p>
+  </div>
+
+  {groups.map(group => (
+    <div style="margin-bottom: 2.5rem;">
+      <div class="section-label">{group.label}</div>
+      <ul class="index-list">
+        {group.items.map(entry => (
+          <li style="display: block; padding: 1.2rem 0;">
+            <div style="display: flex; justify-content: space-between; align-items: baseline; gap: 1rem;">
+              <a href={`/projects/${entry.slug}`}>
+                <span class="item-title" style="font-size: 0.9rem;">{entry.data.title}</span>
+              </a>
+              <span class="item-meta">{entry.data.date}</span>
+            </div>
+            {entry.data.description && (
+              <p class="text-dim" style="margin-top: 0.3rem; margin-bottom: 0; font-size: 0.82rem;">
+                {entry.data.description}
+              </p>
+            )}
+            <div style="margin-top: 0.5rem;">
+              {entry.data.tags.map(tag => <span class="tag">{tag}</span>)}
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))}
+</BaseLayout>
