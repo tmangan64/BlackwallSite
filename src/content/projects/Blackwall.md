@@ -22,12 +22,14 @@ It hosts the following services:
 - DNS sinkhole
 - Media server
 - NAS
+- Git server
 - A few more TBA
 
 ## How it works
 
 By using a hypervisor, we can create a segmented server, also providing dynamic resource adjustment. 
 The machine's OS, software etc is declared via an Ansible configuration meaning replicating an identical server is trivial.
+Given that the Blackwall's Ansible template is public, anyone can create their own Blackwall.
 
 The specification of the prototype machine is:
 ```
@@ -47,4 +49,4 @@ Storage Capacity    6x NVMe
 
 ## Status
 
-Conceptual and WIP
+This project is also my undergrad thesis. It is a WIP.
