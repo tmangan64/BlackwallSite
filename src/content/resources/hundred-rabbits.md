@@ -2,7 +2,7 @@
 title: Hundred Rabbits
 description: Artist collective documenting low-tech, resilient creative tools.
 url: https://100r.co
-type: website
+type: websites
 tags: [tools, philosophy, sailing]
 ---
 

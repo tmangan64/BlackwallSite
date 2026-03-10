@@ -3,7 +3,7 @@ title: Blackwall
 description: All-in-one Homelab
 date: "5-3-2026"
 tags: [self-hosting]
-status: active
+status: WIP
 url: https://blackwall.cam
 repo: https://github.com/tmangan64/Blackwall
 ---
@@ -12,31 +12,39 @@ Whenever I use the term 'Blackwall', I'm referring to this specific machine. It 
 
 ## Why?
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante.
+In today's age of AI, advertising and data harvesting, I want to create my own data fortress. 
 
 ## What it does
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit.
+It hosts the following services:
 
-- Lorem ipsum dolor sit amet
-- Consectetur adipiscing elit
-- Sed do eiusmod tempor incididunt
-- Ut labore et dolore magna aliqua
+- VPN Tunnel providing secure connection anywhere
+- DNS sinkhole
+- Media server
+- NAS
+- A few more TBA
 
 ## How it works
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+By using a hypervisor, we can create a segmented server, also providing dynamic resource adjustment. 
+The machine's OS, software etc is declared via an Ansible configuration meaning replicating an identical server is trivial.
 
+The specification of the prototype machine is:
 ```
-code block placeholder
+Brand               Beelink
+OS                  Proxmox
+CPU                 Intel Celeron 3.4GHz
+RAM                 12GB
+Memory Speed        4800MHz
+Storage             1x 1TB
+Storage Capacity    6x NVMe
 ```
 
-## Tools used
+## Software used
 
-- **Tool one** — lorem ipsum dolor sit amet
-- **Tool two** — consectetur adipiscing elit
-- **Tool three** — sed do eiusmod tempor
+- **DNS Sinkhole** - AdGuard Home
+- **Media Server** - Jellyfin stack
 
 ## Status
 
-Lorem ipsum dolor sit amet. Updated periodically.
+Conceptual and WIP
