@@ -3,7 +3,7 @@ title: Blackwall
 description: All-in-one Homelab
 date: "5-3-2026"
 tags: [self-hosting]
-status: WIP
+status: wip
 url: https://blackwall.cam
 repo: https://github.com/tmangan64/Blackwall
 ---
