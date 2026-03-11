@@ -149,18 +149,26 @@ declare module 'astro:content' {
   data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
 };
-"knowledge": Record<string, {
-  id: string;
-  slug: string;
+"knowledge": {
+"NixOS.md": {
+	id: "NixOS.md";
+  slug: "nixos";
   body: string;
   collection: "knowledge";
-  data: InferEntrySchema<"knowledge">;
-  render(): Render[".md"];
-}>;
+  data: InferEntrySchema<"knowledge">
+} & { render(): Render[".md"] };
+};
 "projects": {
 "Blackwall.md": {
 	id: "Blackwall.md";
   slug: "blackwall";
+  body: string;
+  collection: "projects";
+  data: InferEntrySchema<"projects">
+} & { render(): Render[".md"] };
+"Canto.md": {
+	id: "Canto.md";
+  slug: "canto";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">
@@ -170,6 +178,13 @@ declare module 'astro:content' {
 "hundred-rabbits.md": {
 	id: "hundred-rabbits.md";
   slug: "hundred-rabbits";
+  body: string;
+  collection: "resources";
+  data: InferEntrySchema<"resources">
+} & { render(): Render[".md"] };
+"nixos.md": {
+	id: "nixos.md";
+  slug: "nixos";
   body: string;
   collection: "resources";
   data: InferEntrySchema<"resources">
