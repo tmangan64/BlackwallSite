@@ -31,22 +31,13 @@ const { bsky } = entry.data;
       <div class="section-label">Comments</div>
       <link rel="stylesheet" href="https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.css">
       <div id="bluesky-comments"></div>
-      <script type="importmap">
-        {
-          "imports": {
-            "react": "https://esm.sh/react@19",
-            "react-dom/client": "https://esm.sh/react-dom@19/client"
-          }
-        }
-      </script>
-      <script type="module" define:vars={{ bsky }}>
-        import { createElement } from 'react';
-        import { createRoot } from 'react-dom/client';
-        import { BlueskyComments } from 'https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.es.js';
-
+      <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+      <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+      <script src="https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.umd.js"></script>
+      <script define:vars={{ bsky }}>
         const container = document.getElementById('bluesky-comments');
-        const root = createRoot(container);
-        root.render(createElement(BlueskyComments, { uri: bsky }));
+        const root = ReactDOM.createRoot(container);
+        root.render(React.createElement(BlueskyComments.BlueskyComments, { uri: bsky }));
       </script>
     </div>
   )}
