@@ -1,6 +1,6 @@
 ---
-// src/pages/articles/[slug].astro
 import { getCollection } from 'astro:content';
+import type { CollectionEntry } from 'astro:content';
 import EntryLayout from '../../layouts/EntryLayout.astro';
 
 export async function getStaticPaths() {
@@ -11,10 +11,9 @@ export async function getStaticPaths() {
   }));
 }
 
-import type { CollectionEntry } from 'astro:content';
-
-const { entry } = Astro.props as { entry: CollectionEntry<'knowledge'> };
+const { entry } = Astro.props as { entry: CollectionEntry<'articles'> };
 const { Content } = await entry.render();
+const { bsky } = entry.data;
 ---
 
 <EntryLayout
@@ -26,4 +25,29 @@ const { Content } = await entry.render();
   sectionHref="/articles"
 >
   <Content />
+
+  {bsky && (
+    <div style="margin-top: 3rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+      <div class="section-label">Comments</div>
+      <link rel="stylesheet" href="https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.css">
+      <div id="bluesky-comments"></div>
+      <script type="importmap">
+        {
+          "imports": {
+            "react": "https://esm.sh/react@19",
+            "react-dom/client": "https://esm.sh/react-dom@19/client"
+          }
+        }
+      </script>
+      <script type="module" define:vars={{ bsky }}>
+        import { createElement } from 'react';
+        import { createRoot } from 'react-dom/client';
+        import { BlueskyComments } from 'https://unpkg.com/bluesky-comments@0.12.0/dist/bluesky-comments.es.js';
+
+        const container = document.getElementById('bluesky-comments');
+        const root = createRoot(container);
+        root.render(createElement(BlueskyComments, { uri: bsky }));
+      </script>
+    </div>
+  )}
 </EntryLayout>

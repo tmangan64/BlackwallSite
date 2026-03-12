@@ -11,7 +11,12 @@ const baseSchema = z.object({
 
 export const collections = {
   knowledge: defineCollection({ type: 'content', schema: baseSchema }),
-  articles: defineCollection({ type: 'content', schema: baseSchema }),
+  articles: defineCollection({
+    type: 'content',
+    schema: baseSchema.extend({
+      bsky: z.string().optional(), // Bluesky post URL
+    }),
+  }),
   projects: defineCollection({
     type: 'content',
     schema: baseSchema.extend({
