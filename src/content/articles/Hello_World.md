@@ -3,6 +3,7 @@ title: Hello World
 description: An introduction
 date: "7-3-2026"
 tags: [news]
+bsky: https://bsky.app/profile/did:plc:kunaaq75on73hry4f6lrdwjl/post/3mgv62rg3fk2n
 ---
 
 ## Building 'blackwall.cam'
