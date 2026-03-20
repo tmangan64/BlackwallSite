@@ -1,4 +1,15 @@
 declare module 'astro:content' {
+	interface Render {
+		'.mdx': Promise<{
+			Content: import('astro').MarkdownInstance<{}>['Content'];
+			headings: import('astro').MarkdownHeading[];
+			remarkPluginFrontmatter: Record<string, any>;
+			components: import('astro').MDXInstance<{}>['components'];
+		}>;
+	}
+}
+
+declare module 'astro:content' {
 	interface RenderResult {
 		Content: import('astro/runtime/server/index.js').AstroComponentFactory;
 		headings: import('astro').MarkdownHeading[];
@@ -159,13 +170,13 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "projects": {
-"Blackwall.md": {
-	id: "Blackwall.md";
+"Blackwall.mdx": {
+	id: "Blackwall.mdx";
   slug: "blackwall";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">
-} & { render(): Render[".md"] };
+} & { render(): Render[".mdx"] };
 "Canto.md": {
 	id: "Canto.md";
   slug: "canto";

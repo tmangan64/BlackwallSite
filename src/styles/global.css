@@ -263,7 +263,7 @@ blockquote {
 }
 
 .section-label::after {
-  content: '';
+  content: none;
   flex: 1;
   height: 1px;
   background: var(--border);

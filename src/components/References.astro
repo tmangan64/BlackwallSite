@@ -1,0 +1,105 @@
+---
+interface Ref {
+  id: number;
+  text: string;
+  url?: string;
+}
+
+interface Props {
+  refs: Ref[];
+}
+
+const { refs } = Astro.props;
+---
+
+<section class="references" aria-label="References">
+  <div class="section-label">References</div>
+  <ol class="ref-list">
+    {
+      refs.map((ref) => (
+        <li id={`ref-${ref.id}`}>
+          <span class="ref-number">[{ref.id}]</span>
+          {ref.url ? (
+            <a href={ref.url} target="_blank" rel="noopener">
+              {ref.text}
+            </a>
+          ) : (
+            <span>{ref.text}</span>
+          )}
+          <a
+            href={`#cite-${ref.id}`}
+            class="ref-backlink"
+            aria-label="Back to citation"
+          >
+            ↩
+          </a>
+        </li>
+      ))
+    }
+  </ol>
+</section>
+
+<style>
+  .ref-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .ref-list li {
+    display: flex;
+    gap: 0.6rem;
+    align-items: baseline;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 0.82rem;
+    font-family: var(--font-sans);
+    transition: background 0.4s;
+  }
+
+  .ref-list li:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .ref-number {
+    color: var(--accent);
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .ref-backlink {
+    margin-left: auto;
+    color: var(--fg-dim);
+    font-size: 0.75rem;
+    border: none;
+    flex-shrink: 0;
+  }
+
+  .ref-backlink:hover {
+    color: var(--accent);
+  }
+
+  /* highlight on jump */
+  .ref-highlight {
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border-radius: 2px;
+  }
+</style>
+
+<script>
+  // Highlight the target reference when jumping to it
+  const handleHash = () => {
+    const hash = window.location.hash;
+    if (!hash.startsWith("#ref-")) return;
+    const el = document.querySelector(hash);
+    if (!el) return;
+    el.classList.remove("ref-highlight");
+    void (el as HTMLElement).offsetWidth;
+    el.classList.add("ref-highlight");
+    setTimeout(() => el.classList.remove("ref-highlight"), 2000);
+  };
+
+  window.addEventListener("hashchange", handleHash);
+  handleHash();
+</script>
