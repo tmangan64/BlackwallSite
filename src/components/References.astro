@@ -85,6 +85,10 @@ const { refs } = Astro.props;
     background: color-mix(in srgb, var(--accent) 12%, transparent);
     border-radius: 2px;
   }
+
+  .references .section-label::after {
+    content: none;
+  }
 </style>
 
 <script>
