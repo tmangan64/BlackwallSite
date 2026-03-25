@@ -11,16 +11,18 @@ repo: https://github.com/tmangan64/Blackwall
 import Cite from "../../components/Cite.astro";
 import References from "../../components/References.astro";
 
+# Introduction
+
 Modern households often face the same threats as businesses, albeit without a dedicated IT support team. Families across the UK have voiced their concerns for cyberbullying, privacy, security and digital threats. <Cite id={1}/>
 Despite this rise in cyber security awareness and a desire for a solid domestic framework, there remains little in terms of a consistent framework for a domestic self-hosted server addressing household security needs. <Cite id={2}/>
 
 ## Post-COVID
 
-In a post-COVID world, individuals have shown that the security attitudes they deploy in a professional environment are not often brought into the home. <Cite id={3}/> Suspicious emails do not get reported as often and VPNs aren’t enabled as much.
+In a post-COVID world, individuals have shown that the security attitudes they deploy in a professional environment are not often brought into the home. <Cite id={3}/> Suspicious emails do not get reported as often and VPNs aren't enabled as much.
 
 ## The failures of 'Big Tech'
 
-Modern tech giants have repeatedly demonstrated flaws in their data security. SAP’s AI infrastructure was found responsible for exposing sensitive data potentially allowing attackers to gain access to customer data, a vulnerability within NVIDIA's AI containerisation framework could have allowed attackers to escape a container and gain full access to the host system and
+Modern tech giants have repeatedly demonstrated flaws in their data security. SAP's AI infrastructure was found responsible for exposing sensitive data potentially allowing attackers to gain access to customer data, a vulnerability within NVIDIA's AI containerisation framework could have allowed attackers to escape a container and gain full access to the host system and
 Microsoft recently accidentally exposed 38TB of private data, including passwords. This has created massive mistrust between the general public and these corporations with only 40% of the general British public viewing big tech companies as trustworthy.
 
 ## AI
@@ -29,18 +31,30 @@ The move away from cloud infrastructure is also fueled by mistrust of the admini
 
 ## Self-hosting
 
-When commercial cloud corporations have repeatedly demonstrated an inability to keep customer data secure and private , some individuals have turned to designing, deploying and maintaining this infrastructure themselves. ‘Self-hosting’ is the practice of building, running and maintaining a server, service or website using a private server as opposed to using a service where total control is out of the user’s hands.
-For example, instead of storing photos on iCloud or Google Photos, a self-hoster would use an open-source image and video management program like ‘Immich’ for example. Self-hosters typically run these services on a DIY server called a ‘homelab’. Physically, these devices range from old laptops to Enterprise hardware and can run anything from a virtual machine to a household's networking infrastructure.
+When commercial cloud corporations have repeatedly demonstrated an inability to keep customer data secure and private , some individuals have turned to designing, deploying and maintaining this infrastructure themselves. 'Self-hosting' is the practice of building, running and maintaining a server, service or website using a private server as opposed to using a service where total control is out of the user's hands.
+For example, instead of storing photos on iCloud or Google Photos, a self-hoster would use an open-source image and video management program like 'Immich' for example. Self-hosters typically run these services on a DIY server called a 'homelab'. Physically, these devices range from old laptops to Enterprise hardware and can run anything from a virtual machine to a household's networking infrastructure.
 
 ## 'Spirit of the Internet'
 
-A major proponent of the push to return to a decentralised Internet is Tim Berners-Lee, its creator. He stated that “the ‘traditional model’ (referring to handing data over to companies in exchange for services) has not been in our best interests”. <Cite id={6}/> In response, he has begun work on ‘Solid’, a framework for storing and distributing private data. The idea is that users host their own ‘pods’, repositories of personal data, letting them decide who can and cannot access their personal data. <Cite id={7}/>
-He has described his current efforts with Solid as part of a “battle for the soul of the web”, a fight to reclaim the web’s original spirit of openness, collaboration and individual control.
+A major proponent of the push to return to a decentralised Internet is Tim Berners-Lee, its creator. He stated that “the 'traditional model' (referring to handing data over to companies in exchange for services) has not been in our best interests”. <Cite id={6}/> In response, he has begun work on 'Solid', a framework for storing and distributing private data. The idea is that users host their own 'pods', repositories of personal data, letting them decide who can and cannot access their personal data. <Cite id={7}/>
+He has described his current efforts with Solid as part of a “battle for the soul of the web”, a fight to reclaim the web's original spirit of openness, collaboration and individual control.
 
 ## Problems with self-hosting
 
 On the other hand, self-hosters face their own issues. As the system grows older, small mistakes in configurations such as forwarded ports, firewall rules and user access control lead to compounding problems.
 Given that SentinelOne found 82% of cloud misconfigurations are caused by human mistakes as opposed to software errors, some users may question if it is worth taking back responsibility for their digital security.
+
+## Approach
+
+To assess the security and privacy capabilities of a homelab, using research gathered from self-hosters, an example machine will be designed and built. To complete the assessment, a security assessment will be conducted on the device.
+Given that the goal of a homelab is to maintain the availability of the service without the privacy concerns of a cloud solution for example, a homelab that is easy to construct and maintain, particularly to a user without extensive computer science experience will likely be the most viable solution. With this in mind, it may be worth considering a 'declarative' deployment strategy.
+Literature review
+
+# Literature Review
+
+## Current research
+
+The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset of a self-hoster. It says “there is no directly related work on self-hosting security practices” and that a significant portion of self-hosters approach security without structure. <Cite id={2}/> The study found heavy usage of cyber-security related terminology without understanding the 'how' and 'why' of the terminology. If a proportion of self-hosters do not have an actual threat model plan, segmentation would assist. Instead of planning for each specific threat, a secure home server could instead assume zero trust and place each service within a container and its own 'VLAN' with the intention of denying an attacker's lateral-movement.
 
 <References
   refs={[
