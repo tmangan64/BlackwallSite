@@ -54,7 +54,11 @@ Literature review
 
 ## Current research
 
-The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset of a self-hoster. It says “there is no directly related work on self-hosting security practices” and that a significant portion of self-hosters approach security without structure. <Cite id={2}/> The study found heavy usage of cyber-security related terminology without understanding the 'how' and 'why' of the terminology. If a proportion of self-hosters do not have an actual threat model plan, segmentation would assist. Instead of planning for each specific threat, a secure home server could instead assume zero trust and place each service within a container and its own 'VLAN' with the intention of denying an attacker's lateral-movement.
+The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset of a self-hoster. It says “there is no directly related work on self-hosting security practices” and that a significant portion of self-hosters approach security without structure. <Cite id={2}/> The study found heavy usage of cyber-security related terminology without understanding the 'how' and 'why' of the terminology. If a proportion of self-hosters do not have an actual threat model plan, segmentation would assist. Instead of planning for each specific threat, a secure home server could instead assume zero trust and place each service within a container and its own 'VLAN' with the intention of denying an attacker's lateral-movement. This study also justifies the use of 'declarative programming' given that if the design of the entire system was pre-configured, users aren't overwhelmed by complexity of network security.
+
+## Working from Home
+
+The 2020 COVID Pandemic brought a rapid shift to 'work from home' (WFH) via shifts to laptops, VPNs and conference applications like Zoom and Microsoft Teams. “Cybersecurity in Working from Home: An Exploratory Study” by Bispham, Creese, Dutton, Esteve-González, and Goldsmith (Oxford, 2021) states that this also introduced more vectors of attack. It is now common for households to contain corporate infrastructure and now potentially targets for an attack. Cyber incidents originating from personal/home environments have become increasingly prominent. Notable breaches include LastPass <Cite id={8}/>, 3CX <Cite id={9}/>, a large-scale compromise involving 36 Chrome extensions <Cite id={10}/>, and the 2025 Bybit $1.5B heist <Cite id={11}/>. In each case, attackers leveraged user devices or accounts outside corporate-controlled infrastructure - e.g. an engineer's home PC or developer workstation - to gain initial access. The common thread is unmanaged or personally-used devices lacking enterprise controls, which attackers exploited via malware, software-supply-chain trojans, or social engineering.
 
 <References
   refs={[
@@ -92,6 +96,26 @@ The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset
       id: 7,
       text: "Lohr, S. (New York Times) - He Created the Web. Now He's Trying to Redeem It.",
       url: "https://www.nytimes.com/2021/01/10/technology/tim-berners-lee-privacy-internet.html",
+    },
+    {
+      id: 8,
+      text: "Information Commissioner's Office - Password manager provider fined £1.2m by ICO for data breach",
+      url: "https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2025/12/password-manager-provider-fined/",
+    },
+    {
+      id: 9,
+      text: "Johnson, J. et al (Google Cloud Blog) - 3CX Software Supply Chain Compromise Initiated by a Prior Software Supply Chain Compromise; Suspected North Korean Actor Responsible",
+      url: "https://cloud.google.com/blog/topics/threat-intelligence/3cx-software-supply-chain-compromise",
+    },
+    {
+      id: 10,
+      text: "Schwartz, M. (Bank Info Security) - 36 Chrome Extensions Compromised in Supply Chain Attack",
+      url: "https://www.bankinfosecurity.com/36-chrome-extensions-compromised-in-supply-chain-attack-a-27207#",
+    },
+    {
+      id: 11,
+      text: "Danielson, L. (Huntress) - Bybit Data Breach",
+      url: "https://www.huntress.com/threat-library/data-breach/bybit-cryptocurrency-exchange-data-breach",
     },
   ]}
 />
