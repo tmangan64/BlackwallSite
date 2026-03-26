@@ -159,6 +159,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: InferEntrySchema<"articles">
 } & { render(): Render[".md"] };
+"selfhosting.mdx": {
+	id: "selfhosting.mdx";
+  slug: "selfhosting";
+  body: string;
+  collection: "articles";
+  data: InferEntrySchema<"articles">
+} & { render(): Render[".mdx"] };
 };
 "knowledge": {
 "NixOS.md": {
@@ -170,13 +177,13 @@ declare module 'astro:content' {
 } & { render(): Render[".md"] };
 };
 "projects": {
-"Blackwall.mdx": {
-	id: "Blackwall.mdx";
+"Blackwall.md": {
+	id: "Blackwall.md";
   slug: "blackwall";
   body: string;
   collection: "projects";
   data: InferEntrySchema<"projects">
-} & { render(): Render[".mdx"] };
+} & { render(): Render[".md"] };
 "Canto.md": {
 	id: "Canto.md";
   slug: "canto";
