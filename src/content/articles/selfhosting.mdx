@@ -52,7 +52,11 @@ Literature review
 
 # Literature Review
 
-## Current research
+## Early Research
+
+C. Bae et al's 'Home Server for Home Digital Service Environments' published in 2003 is some of the earliest research into the field of home servers and shows how far the field has moved since. The paper explicitly states that a home server would be the only permanent IP address in the house, managine DCHP for everything else. <Cite id={}/> From a security standpoint, this creates a central weakness point in the home where, should control be gained, an attacker would have full access to the entire household. “The home server sets and performs firewall using a filtering style. The firewall to restrict the access of the data packets from unauthorized IP addresses is installed to guarantee the security of home network”. This is the only time the paper addresses the security aspect of home servers and from today's standard's would not be enough. A security system that only utilises a firewall is poor as a firewall simply follows all instructions given by the operator meaning if malicious traffic followed the firewall's rules, it would be able to connect to the server without issue. The paper does not address authentication, encryption, maintenance or threat modelling.
+
+## Current Research
 
 The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset of a self-hoster. It says “there is no directly related work on self-hosting security practices” and that a significant portion of self-hosters approach security without structure. <Cite id={2}/> The study found heavy usage of cyber-security related terminology without understanding the 'how' and 'why' of the terminology. If a proportion of self-hosters do not have an actual threat model plan, segmentation would assist. Instead of planning for each specific threat, a secure home server could instead assume zero trust and place each service within a container and its own 'VLAN' with the intention of denying an attacker's lateral-movement. This study also justifies the use of 'declarative programming' given that if the design of the entire system was pre-configured, users aren't overwhelmed by complexity of network security.
 
@@ -102,6 +106,9 @@ The 2020 COVID Pandemic brought a rapid shift to 'work from home' (WFH) via shif
       text: "Information Commissioner's Office - Password manager provider fined £1.2m by ICO for data breach",
       url: "https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2025/12/password-manager-provider-fined/",
     },
+    {
+      id:
+    }
     {
       id: 9,
       text: "Johnson, J. et al (Google Cloud Blog) - 3CX Software Supply Chain Compromise Initiated by a Prior Software Supply Chain Compromise; Suspected North Korean Actor Responsible",

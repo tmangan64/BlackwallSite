@@ -23,7 +23,7 @@ It hosts the following services:
 - Media server (Jellyfin, Jellyseer, Radarr, Sonarr ,)
 - NAS
 - Git server
-- vscode web server
+- vscode web server/coder
 - Authentik
 - n8n
 - Outline
