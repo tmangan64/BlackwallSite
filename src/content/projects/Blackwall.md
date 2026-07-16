@@ -8,17 +8,28 @@ url: https://blackwall.cam
 repo: https://github.com/tmangan64/Blackwall
 ---
 
-Whenever I use the term 'Blackwall', I'm referring to this specific machine. It hosts this website, many services and terrabytes of media. It is my permanent presence on the Internet.
+The Blackwall is a network centralised around a single server. The goal is to increase digital independence by self-hosting. Each device on the network (inlcuding central node) runs NixOS.
+
+The naming can be confusing intially but it's simple. There are three devices creating this network:
+
+- Elysia, desktop
+- Canto, laptop
+- Blackwall, server
+
+The names are drawn from Cyberpunk 2077. A rogue and talented hacker named Rache Bartmoss develops and releases viruses upon the internet. These viruses cause AIs across the world to go rogue and leads to the internet being overrun and made unusable. Elysia is the name of his personal cyberdeck (computer) and was his weapon against the corporations.
+
+The Blackwall is also from Cyberpunk 2077 and is the name of the firewall that stops these AI from breaching the new internet. Given it sits between the internet, ravaged and made unusable by AI, it's a fitting name for this project. Given that the Blackwall is actually an AI itself, this is also ironic given that AI has been a useful troubleshooting tool in this project.
+
+Canto is the name of a Cyberdeck and gives the player the ability to 'open' the Blackwall and allow the rogue AIs of the old internet to hack and kill an opponent. It is the device most used to access and maintain the Blackwall project making it a fitting name.
 
 ## Why?
 
-In today's age of AI, advertising and data harvesting, I want to create my own data fortress.
+In today's age of AI, advertising and data harvesting, I want to create my own 'data fortress' and carve out my pocket of the internet.
 
 ## What it does
 
 It hosts the following services:
 
-- VPN Tunnel providing secure connection anywhere
 - DNS sinkhole
 - Media server (Jellyfin, Jellyseer, Radarr, Sonarr ,)
 - NAS

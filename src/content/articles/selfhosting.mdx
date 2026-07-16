@@ -1,8 +1,8 @@
 ---
-title: Self-hosting and Security - A Framework for Secure Household Servers
-description: Containing an Ansible template for a secure server
-date: "5-3-2026"
-tags: [self-hosting]
+title: Securing the Home Server
+description: A NixOS-Based Declarative Framework for Domestic Cybersecurity
+date: "22-5-2026"
+tags: [self-hosting, NixOS]
 status: wip
 url: https://blackwall.cam
 repo: https://github.com/tmangan64/Blackwall
@@ -13,116 +13,301 @@ import References from "../../components/References.astro";
 
 # Introduction
 
-Modern households often face the same threats as businesses, albeit without a dedicated IT support team. Families across the UK have voiced their concerns for cyberbullying, privacy, security and digital threats. <Cite id={1}/>
-Despite this rise in cyber security awareness and a desire for a solid domestic framework, there remains little in terms of a consistent framework for a domestic self-hosted server addressing household security needs. <Cite id={2}/>
+## The Domestic Cybersecurity Problem
 
-## Post-COVID
+Modern households face many of the same cybersecurity threats as small businesses, yet without the benefit of a dedicated IT support team to respond to them. Families across the UK have voiced concerns spanning cyberbullying, personal privacy, account security and a growing landscape of digital threats. <Cite id={1}/> The average family's digital infrastructure (including smart devices, personal computers, shared cloud storage and remote work equipment) is now sufficiently complex that the absence of a coherent security model represents a genuine and underappreciated risk.
 
-In a post-COVID world, individuals have shown that the security attitudes they deploy in a professional environment are not often brought into the home. <Cite id={3}/> Suspicious emails do not get reported as often and VPNs aren't enabled as much.
+## The Post-COVID Shift in Behaviour
 
-## The failures of 'Big Tech'
+The COVID-19 pandemic triggered a sudden migration of professional work into the domestic environment. VPNs, corporate laptops and internal business systems were rapidly deployed into homes with only consumer-grade network infrastructure. Research from the Oxford Internet Institute found that the security attitudes practiced in professional settings were not reliably carried over into the home. <Cite id={2}/>
 
-Modern tech giants have repeatedly demonstrated flaws in their data security. SAP's AI infrastructure was found responsible for exposing sensitive data potentially allowing attackers to gain access to customer data, a vulnerability within NVIDIA's AI containerisation framework could have allowed attackers to escape a container and gain full access to the host system and
-Microsoft recently accidentally exposed 38TB of private data, including passwords. This has created massive mistrust between the general public and these corporations with only 40% of the general British public viewing big tech companies as trustworthy.
+Since the 2020 Pandemic, the blurring of professional and personal environments has become permanent. Several significant security incidents can be traced to compromised home or personal infrastructure. The 2022 LastPass breach was found to have originated via the personal device of a DevOps engineer. <Cite id={3}/> The 2023 3CX supply chain attack, in which a trojanised version of a widely used business communications application was distributed to thousands of organisations, was enabled by malware from an employee's personal computer. <Cite id={4}/>
 
-## AI
+The 2025 Bybit exchange breach, resulting in approximately $1.5 billion in losses, followed a similar pattern in which a developer's personal environment was leveraged to gain initial access. <Cite id={5}/> In each case, the common denominator was a personally used device operating outside of enterprise security controls. Taken together, these incidents demonstrate that home environments are now a critical component of corporate security.
 
-The move away from cloud infrastructure is also fueled by mistrust of the administrators especially given recent accusations made against big data companies. LinkedIn (owned by Microsoft) was sued in a US federal court by LinkedIn Premium customers, alleging private InMail messages and customer info were disclosed to third parties for AI training without consent, although the plaintiffs later dismissed the case. <Cite id={4}/> A group of authors have filed a lawsuit against Microsoft alleging around 200,000 pirated books were used to train an AI model, demonstrating corporate use of large copyrighted data sets in training. Nvidia were even caught contacting Anna's Archive (a shadow library) for access to millions of torrented books for AI training. <Cite id={5}/>
+## Failures of Commercial Cloud Infrastructure
 
-## Self-hosting
+A popular response to domestic data management has been handing storage and services to cloud providers. This has itself been undermined by a series of high-profile failures. SAP's AI infrastructure was found to contain vulnerabilities that exposed sensitive customer data. <Cite id={6}/> A critical flaw in NVIDIA's AI containerisation framework could have allowed attackers to escape from a container and gain full access to the underlying host system. <Cite id={7}/> Microsoft accidentally exposed 38 terabytes of private internal data, including passwords, through a misconfigured storage account managed by its AI research division. <Cite id={8}/> These represent failures at the infrastructure level of some of the world's largest technology companies.
 
-When commercial cloud corporations have repeatedly demonstrated an inability to keep customer data secure and private , some individuals have turned to designing, deploying and maintaining this infrastructure themselves. 'Self-hosting' is the practice of building, running and maintaining a server, service or website using a private server as opposed to using a service where total control is out of the user's hands.
-For example, instead of storing photos on iCloud or Google Photos, a self-hoster would use an open-source image and video management program like 'Immich' for example. Self-hosters typically run these services on a DIY server called a 'homelab'. Physically, these devices range from old laptops to Enterprise hardware and can run anything from a virtual machine to a household's networking infrastructure.
+The consequence is a measurable erosion of public trust. Only 40% of British adults now regard large technology companies as trustworthy, with large social media platforms polling even worse. <Cite id={9}/> This distrust has a direct security dimension.
 
-## 'Spirit of the Internet'
+## Self-Hosting as an Alternative
 
-A major proponent of the push to return to a decentralised Internet is Tim Berners-Lee, its creator. He stated that “the 'traditional model' (referring to handing data over to companies in exchange for services) has not been in our best interests”. <Cite id={6}/> In response, he has begun work on 'Solid', a framework for storing and distributing private data. The idea is that users host their own 'pods', repositories of personal data, letting them decide who can and cannot access their personal data. <Cite id={7}/>
-He has described his current efforts with Solid as part of a “battle for the soul of the web”, a fight to reclaim the web's original spirit of openness, collaboration and individual control.
+'Self-hosting' is the practice of building, running and maintaining a server, service or website on private infrastructure rather than giving that responsibility to a third-party cloud provider. Where a typical user might store photographs on Apple iCloud or Google Photos, a self-hoster would deploy an open-source alternative such as Immich <Cite id={10}/> or Ente <Cite id={11}/> on a machine they physically own and control. Where a user might send files via Dropbox, a self-hoster might run Nextcloud. <Cite id={12}/> The appeal is straightforward: the user's data remains under their exclusive control, and the privacy and security of that data depends on their own choices rather than on the policies of a corporation.
 
-## Problems with self-hosting
+Self-hosters typically run these services on a device called a 'home server'. Commercially, two product categories dominate the market: appliance-style Network Attached Storage (NAS) devices from manufacturers such as Synology <Cite id={13}/> and QNAP <Cite id={14}/>, which offer an accessible, pre-configured entry point; and general-purpose platforms such as Proxmox VE <Cite id={15}/> and Unraid <Cite id={16}/>, which provide greater flexibility at the cost of greater complexity. A smaller but growing community of technically minded self-hosters build their systems on open Linux distributions, configuring everything from the operating system upward.
 
-On the other hand, self-hosters face their own issues. As the system grows older, small mistakes in configurations such as forwarded ports, firewall rules and user access control lead to compounding problems.
-Given that SentinelOne found 82% of cloud misconfigurations are caused by human mistakes as opposed to software errors, some users may question if it is worth taking back responsibility for their digital security.
+## Reclaiming the Open Web
 
-## Approach
+The push toward decentralised, user-controlled infrastructure is not confined to the self-hosting community. Tim Berners-Lee, the inventor of the World Wide Web, has been an outspoken advocate for returning to the web's original principles of openness and individual agency. In a January 2026 interview with The Guardian, he described his current efforts as a 'battle for the soul of the web', arguing that the model of exchanging personal data for services 'has not been in our best interests'. <Cite id={17}/>
 
-To assess the security and privacy capabilities of a homelab, using research gathered from self-hosters, an example machine will be designed and built. To complete the assessment, a security assessment will be conducted on the device.
-Given that the goal of a homelab is to maintain the availability of the service without the privacy concerns of a cloud solution for example, a homelab that is easy to construct and maintain, particularly to a user without extensive computer science experience will likely be the most viable solution. With this in mind, it may be worth considering a 'declarative' deployment strategy.
-Literature review
+His proposed technical solution is 'Solid' (Social Linked Data), a framework developed initially at MIT and now commercialised through his startup Inrupt. Solid allows users to store personal data in 'pods' - self-hosted or third party-hosted repositories of linked data - and to grant or revoke application access to that data on their own terms. <Cite id={18}/>
+
+However, Solid also illustrates the core tension in any decentralised security model. Its security guarantees depend on the quality of the server implementation chosen by each user. Berners-Lee himself has acknowledged that users without coding skills are not the target implementers of the protocol, advising that non-technical users should instead 'advocate publicly for changing the Internet'. <Cite id={19}/> This creates a gap. The users most in need of privacy protection are least equipped to deploy and secure their own Solid pods. Critics of the project have noted that commercially available pod hosting services remain sparse or experimental, that the default user interface is rudimentary, and that developers are still required to handle security protocol implementation themselves, without mature library support. <Cite id={20}/> The Solid project shows promise, but as of 2026, it remains a largely technical undertaking that has yet to achieve broad accessibility.
+
+## Introducing NixOS
+
+NixOS is a Linux distribution built around a single principle. The complete state of the system is described in a configuration file, and the running system is rebuilt from that file rather than modified in place. Conventional distributions such as Ubuntu or Debian present the administrator with a mutable system. The operator installs a base image, then accumulates changes over time through package installations, edited configuration files and service modifications applied through the command line.
+
+The current state of such a system is the cumulative result of every change ever made to it, and no single document records what those changes were.
+
+NixOS inverts this model. The system's configuration is declared in a set of files written in the Nix expression language. In modern NixOS practice, these files are organised in a structure called a 'Flake', which bundles the configuration together with a locked record of every external dependency it pulls in. The Flake specifies the kernel, the installed packages, the services that run, the user accounts that exist, the firewall rules in effect, the network configuration and every other property of the system. When the operator wants to change the system, they edit the configuration and run a rebuild command. The rebuild constructs the new system state from the specification and activates it. The system itself is never modified in place. It is replaced.
+
+This produces several properties that matter for home server security. Each rebuild is atomic, meaning the activation either succeeds completely or the system remains on its previous state. Previous system states (called 'generations') remain available in the bootloader, so a regression can be reverted by rebooting and selecting the prior generation. The configuration is text, so it can be version-controlled with Git, reviewed before deployment and reproduced exactly on a different machine from the same files. The Nix package manager underneath stores packages at content-addressed paths in /nix/store, which allows different versions of the same library to coexist without conflict and makes the contents of the system inspectable.
+
+The relevant consequence is that the running system cannot drift away from its specification through ad-hoc changes. A change that is not in the configuration file does not persist past the next rebuild.
+
+## The Problem of Self-Hosting Security
+
+Configuration drift is a known failure pattern in professionally-administered systems. Verizon's 2024 Data Breach Investigations Report attributes 68 per cent of breaches to a broadly-defined human element, of which misconfiguration is one named contributor. <Cite id={21}/> The relevant evidence for domestic self-hosting is Gröber et al.'s direct observation that self-hosters apply security terminology without coherent threat models and that configuration consistency is not maintained over time. <Cite id={22}/>
+
+There is no reason to assume domestic self-hosters are immune to the same pattern. If anything, the research of Gröber et al. suggests they may be more vulnerable, given the absence of professional oversight and the tendency to deploy security controls without fully understanding the threat models they are intended to address.
+
+The greatest single threat to a self-hosted system may be the operating system itself. An unpatched OS vulnerability on an internet-accessible server is a known and frequently exploited attack vector. Vendor-controlled firmware creates a structural dependency on the vendor's patching timeline, with no mechanism for the operator to audit the software stack, remove unused components or apply independent fixes.
+
+Conventional Linux distributions used on general-purpose home servers present a related problem. The typical imperative administration workflow (logging into a running system over SSH and applying changes in-place) produces no durable, auditable record of what the system's intended state is, which makes configuration drift inevitable. Infrastructure as Code (IaC) tooling such as Ansible <Cite id={23}/> and Terraform <Cite id={24}/> addresses configuration management in enterprise environments by expressing desired system state as version-controlled code.
+
+These tools bring meaningful improvements in auditability and repeatability over manual administration, but they operate in a fundamentally imperative mode (meaning they describe the steps to reach a state, not the state itself) and the running system remains mutable between runs. As introduced above, NixOS addresses this at a deeper level. Because the running system is rebuilt from a single declarative Flake rather than modified in place, any deviation from the specification is structurally unable to persist past the next rebuild. The system cannot drift, because there is no mechanism by which an in-place change can survive outside the file.
 
 # Literature Review
 
-## Early Research
+## The Home Server as a Research Domain
 
-C. Bae et al's 'Home Server for Home Digital Service Environments' published in 2003 is some of the earliest research into the field of home servers and shows how far the field has moved since. The paper explicitly states that a home server would be the only permanent IP address in the house, managine DCHP for everything else. <Cite id={}/> From a security standpoint, this creates a central weakness point in the home where, should control be gained, an attacker would have full access to the entire household. “The home server sets and performs firewall using a filtering style. The firewall to restrict the access of the data packets from unauthorized IP addresses is installed to guarantee the security of home network”. This is the only time the paper addresses the security aspect of home servers and from today's standard's would not be enough. A security system that only utilises a firewall is poor as a firewall simply follows all instructions given by the operator meaning if malicious traffic followed the firewall's rules, it would be able to connect to the server without issue. The paper does not address authentication, encryption, maintenance or threat modelling.
+Academic treatment of home servers has been sparse given the popularity of the technology. Bae et al. <Cite id={25}/> offers one of the earliest formal treatments, proposing a home server as the single permanent IP address within a household, managing DHCP allocation and service provision for all connected devices. The paper is useful as a historical marker. It identifies the household as a legitimate site of computing infrastructure at a time when few researchers were doing so, and anticipates the convergence of entertainment, communication and storage services onto a single domestic device.
 
-## Current Research
+Its architectural recommendations, however, have aged poorly. The proposed 'single-server-as-network-foundation' model creates a catastrophic single point of failure. An attacker who compromises the server compromises the entire household network, including addressing for every connected device. The paper's security discussion, limited to a brief description of a packet-filtering firewall, treats security as synonymous with perimeter control. It does not address authentication, encryption, update management, user access control or threat modelling. A firewall operating on packet filtering alone enforces whatever rules its operator has configured and permits any traffic crafted to comply with those rules.
 
-The paper “To Cloud or Not to Cloud” is a qualitative study into the mindset of a self-hoster. It says “there is no directly related work on self-hosting security practices” and that a significant portion of self-hosters approach security without structure. <Cite id={2}/> The study found heavy usage of cyber-security related terminology without understanding the 'how' and 'why' of the terminology. If a proportion of self-hosters do not have an actual threat model plan, segmentation would assist. Instead of planning for each specific threat, a secure home server could instead assume zero trust and place each service within a container and its own 'VLAN' with the intention of denying an attacker's lateral-movement. This study also justifies the use of 'declarative programming' given that if the design of the entire system was pre-configured, users aren't overwhelmed by complexity of network security.
+Reading Bae et al. against the contemporary threat landscape reveals how dramatically the domain has shifted. In 2003, the household was a closed network with limited internet exposure. In 2026, a typical household runs dozens of internet-facing services across smart devices, remote work tools, streaming platforms and cloud synchronisation clients.
 
-## Working from Home
+The threat landscape has expanded from physical theft and casual network snooping to include automated internet-wide scanning, supply chain attacks, ransomware targeting consumer devices and credential theft feeding commercial markets. The academic literature has not kept pace.
 
-The 2020 COVID Pandemic brought a rapid shift to 'work from home' (WFH) via shifts to laptops, VPNs and conference applications like Zoom and Microsoft Teams. “Cybersecurity in Working from Home: An Exploratory Study” by Bispham, Creese, Dutton, Esteve-González, and Goldsmith (Oxford, 2021) states that this also introduced more vectors of attack. It is now common for households to contain corporate infrastructure and now potentially targets for an attack. Cyber incidents originating from personal/home environments have become increasingly prominent. Notable breaches include LastPass <Cite id={8}/>, 3CX <Cite id={9}/>, a large-scale compromise involving 36 Chrome extensions <Cite id={10}/>, and the 2025 Bybit $1.5B heist <Cite id={11}/>. In each case, attackers leveraged user devices or accounts outside corporate-controlled infrastructure - e.g. an engineer's home PC or developer workstation - to gain initial access. The common thread is unmanaged or personally-used devices lacking enterprise controls, which attackers exploited via malware, software-supply-chain trojans, or social engineering.
+## Current Self-Hosting Practice and Its Documented Failures
+
+The most directly relevant modern research is Gröber et al. <Cite id={22}/>, a qualitative study of self-hoster motivations, practices and security attitudes presented at USENIX Security 2023. The authors conducted semi-structured interviews with self-hosters recruited through online communities, generating the first systematic account of how self-hosted infrastructure is secured in practice.
+
+The study's most important finding is that a significant proportion of self-hosters apply security terminology without a coherent understanding of the threat models those terms were developed to address. Participants used terms such as 'zero trust', 'hardening' and 'DMZ' fluently, but were often unable to explain what attack pattern a specific measure was designed to prevent. Security decisions in self-hosted deployments are therefore frequently driven by community folklore and pattern matching rather than systematic reasoning. A system whose security depends on the operator's ongoing vigilance, as most self-hosted systems do, is operating with a weak foundation.
+
+A related finding concerns lateral movement. Most participants treated each self-hosted service as an independent unit without meaningful isolation from others. An attacker who compromises one service, whether through a known vulnerability, a default credential or a configuration error, can typically reach others running on the same machine. This has direct architectural implications. A home server framework that assumes the operator will not perfectly model the threat landscape should be designed to contain the blast radius of any single compromise.
+
+Bispham et al. <Cite id={2}/> provides context from a complementary angle. Their exploratory study of cybersecurity practices during the shift to remote working, conducted at Oxford in 2021, found that professional security attitudes were not reliably carried into domestic environments. Employees accustomed to automatically enforced corporate policies reverted to looser practices when working from home. Suspicious emails were more often ignored rather than reported. VPNs were inconsistently used. The paper predates the subsequent wave of incidents that exploited exactly this gap, including the LastPass breach of 2022, the 3CX supply chain compromise of 2023, the Chrome extension supply chain attacks of 2024 and the Bybit exchange breach of 2025. Each of these originated in personal or home infrastructure operating outside enterprise controls.
+
+Read together, the two papers establish a connected claim. Domestic security practice is inconsistent and poorly grounded in threat modelling, and the consequences of that inconsistency have become increasingly significant as the boundary between home and professional infrastructure has blurred. What neither paper offers is a picture of what a better domestic security architecture would look like. Gröber et al. documents the problem. Bispham et al. documents its consequences. Neither proposes a principled response.
+
+## Commercial and Platform Alternatives
+
+The dominant commercial response to domestic storage and service hosting has been the proprietary NAS appliance, supplied principally by Synology and QNAP. These devices offer turnkey hardware and software, a web-based management interface and an application ecosystem covering file sharing, media streaming, backup and remote access. Their appeal is accessibility. A user without systems administration experience can deploy a working NAS within an hour. Their security record is not matched to their market share.
+
+QNAP's QTS operating system has been the subject of repeated critical vulnerability disclosures. CVE-2023-23368 and CVE-2023-23369, with CVSS scores of 9.8 and 9.0 respectively, allowed remote command execution across affected devices. <Cite id={26}/> Further unauthenticated OS command injection vulnerabilities were disclosed in early 2024, and Palo Alto Networks Unit 42 researchers characterised them as exhibiting "a combination of low attack complexity and critical impact, making them an irresistible target for threat actors". <Cite id={27}/>
+
+Palo Alto's own internet telemetry identified vulnerable QNAP devices at nearly 290,000 distinct IP addresses during a single week of monitoring in January 2024. <Cite id={28}/> At the Pwn2Own Ireland 2024 competition, further QNAP vulnerabilities were demonstrated live, leading to emergency vendor patches. <Cite id={29}/>
+
+Synology's record is comparable. At the same Pwn2Own event, researcher Rick de Jager demonstrated CVE-2024-10443, a zero-click remote code execution vulnerability in DiskStation Manager and BeePhotos that granted root access without user interaction on any internet-connected affected device. Synology's own advisory estimated between one and two million devices were affected. <Cite id={29}/> The pattern across both vendors is consistent. Vulnerabilities are disclosed, patched for currently supported models and left unpatched on older devices that have reached end of life. Given the typical service life of NAS hardware, often exceeding five years, this produces a long tail of internet-connected devices running unpatched firmware against known exploits.
+
+The deeper problem with proprietary NAS operating systems is common to all vendor-controlled firmware. The operator has no visibility into the full software stack, no capacity to audit it, no way to remove unused components that represent the attack surface and no path to independent patching. Security becomes a matter of vendor goodwill, and vendor goodwill has a defined expiry date tied to the product lifecycle rather than to the actual threat landscape.
+
+The principal open-source alternative is Proxmox Virtual Environment, a bare-metal hypervisor built on Debian Linux, offering a web-based interface and support for both KVM virtual machines and LXC containers. Proxmox provides the flexibility that NAS appliances lack, but it inherits a different class of problems. The platform is imperative by design. An administrator installs the base system, then connects via SSH or web interface to apply changes directly to a running system. There is no native mechanism for expressing the desired system state as code and reconciling the live system against that specification. Over time, the running system diverges from any documentation produced during initial setup, and the relationship between configuration decisions and their effects becomes opaque.
+
+Proxmox also carries a larger attack surface than many home deployments require. A Proxmox installation bundles Debian base plus the Proxmox management stack, a web UI, QEMU, LXC, OVMF and VFIO bindings. Each component is an attack path. The platform's CVE history includes API vulnerabilities permitting arbitrary host file reads leading to full system compromise, server-side request forgery allowing root escalation, stored cross-site scripting in the management interface and a two-factor authentication bypass. <Cite id={30}/>
+
+The hardening required to operate Proxmox responsibly, including dedicated management VLANs, SSH key hardening, unattended-upgrade configuration and network segmentation between host and guest networks, is documented but non-trivial. <Cite id={31}/> It requires the kind of ongoing expert configuration that Gröber et al. found to be absent in real self-hosted deployments.
+
+The common thread across these platforms is that all of them treat security as a property to be maintained through operator diligence rather than as a property that emerges from the architecture. The proprietary appliances trust the vendor's patching timeline. Proxmox trusts the operator's ongoing vigilance. Neither model holds up well against the evidence in Gröber et al. that operator vigilance is inconsistent and that vendor timelines do not track threat timelines.
+
+## Infrastructure as Code: Partial Response, Remaining Problem
+
+The enterprise computing response to the configuration drift problem has been Infrastructure as Code. Tools including Ansible, Terraform, Puppet and Chef allow operators to express a desired system state as version-controlled, machine-readable files applied reproducibly across environments. The improvement over purely manual administration is substantial. Changes become auditable, repeatable and reviewable before application. Ansible's declarative YAML playbooks describe how to configure a system. Terraform expresses infrastructure topology in its own language and reconciles cloud resources against the declared state.
+
+These tools are widely adopted in enterprise environments and genuinely improve configuration management. They are not, however, a complete response to the drift problem. Conventional IaC tooling remains imperative in operation. Ansible playbooks describe the steps required to reach a desired state and apply those steps to a mutable running system. A partial-run failure can leave a system in a partially applied state. Changes made outside the IaC workflow persist silently until the next run. The running system and the declared configuration can diverge, and standard IaC tools neither prevent nor reliably detect this divergence.
+
+Terraform's state file reduces the problem by tracking the last known configuration of managed resources, but the model remains reconciliatory. The system can still change between runs. Between runs, nothing prevents drift.
+
+For enterprise teams with dedicated operations staff running continuous reconciliation, these limitations are manageable through process discipline. For a domestic self-hoster without professional support or continuous tooling, they translate directly into the drift that Gröber et al. documented. IaC tooling is an improvement but not a solution. It addresses the symptom of undocumented manual changes but not the underlying architectural permission for the running system to diverge from its specification.
+
+## NixOS in Home Server Context
+
+The Nix package manager underlying NixOS originated in Eelco Dolstra's 2006 doctoral thesis at Utrecht University. <Cite id={32}/> The distribution built on top of it inherits Nix's content-addressed store and pure-functional package definitions and extends them to cover the configuration of a whole running system. The Flakes system, now stable after several years as an experimental feature, locks the exact version of the nixpkgs package set in a flake.lock file, ensuring any future rebuild against the same Flake produces an identical result. For a home server expected to remain stable across rebuilds and reproducible after a hardware failure, this is not a cosmetic feature. It is the mechanism by which the system survives an event that would otherwise require manual reconstruction.
+
+The architecture's relevance to home server security becomes clearest when its properties are placed against the failure modes documented above.
+
+Configuration drift is structurally prevented within the scope of the declared state. The Gröber et al. finding that self-hosted systems accumulate undocumented changes over time does not apply to a NixOS system in the same way. Any change that is not in the Flake does not survive a rebuild. The relationship between configuration and running system is verifiable rather than reconstructed from memory.
+
+The attack surface is constrained by declaration. A package that does not appear in the configuration is not installed. Where Proxmox installations bundle Debian base plus a hypervisor management stack, a web UI, QEMU, LXC, OVMF and VFIO bindings whether they are needed or not, a NixOS home server contains only what the Flake specifies. This matters against the documented vulnerability histories of QTS, DSM and Proxmox VE, where unused or weakly-defended components have repeatedly been the entry point.
+
+Atomic updates and bootloader-level rollback change the operator's relationship to system updates. On a conventional system, applying a security patch carries the risk that the update breaks a dependent service and leaves the system partially working. The operator can become reluctant to update for this reason, and the unpatched-OS problem documented across QNAP and Synology devices follows. On NixOS, an update either activates successfully, or the system remains on its previous generation. A regression discovered after activation is reverted by rebooting and selecting the prior generation from the boot menu. The cost of applying an update is lower because the cost of reversing a bad update is lower.
+
+The model is not, however, a complete answer. The declarative guarantee covers declared state only. Runtime state, including database contents, uploaded files, container volumes and log data, remains mutable and outside the specification. A NixOS system can be rebuilt exactly from its Flake. The data living on its disks is a separate concern that requires backup tooling, which itself needs declarative configuration.
+
+The learning curve is steep. The Nix expression language is functional and unfamiliar to most administrators trained on imperative tools. Documentation, while extensive, is uneven in quality and sometimes difficult to navigate. The community is smaller than those of Debian or Ubuntu. Some proprietary software is harder to package on NixOS than on conventional distributions. These costs apply most heavily to the non-technical household user who would benefit most from the architecture.
+
+Most relevant for this research, NixOS has not been systematically evaluated in a domestic home server context. The literature covers its use in enterprise, research computing and specialist deployments. It does not cover the specific question of whether a declarative architecture produces accessible, deployable security improvements for households where Gröber et al. found imperatively configured systems most often insecure. The structural properties are well-documented. The accessibility of those properties to non-experts is not.
+
+## Synthesis and Research Gap
+
+The literature establishes a chain of claims. Academic treatment of home server security as a distinct problem domain is sparse, and what does exist is outdated against the current threat landscape. Current self-hosting practice is documented to be insecure in specific ways, including inconsistent use of security terminology and broadly unmitigated lateral movement risk. Commercial NAS platforms and open-source hypervisor platforms alike have structural security problems, including vendor lock-in to patching timelines, expanded attack surface and a dependence on operator vigilance that Gröber et al. found to be unreliable. Infrastructure as Code tooling improves configuration management in enterprise settings but does not structurally prevent drift, because the running system remains mutable between tool runs.
+
+What the literature does not establish is whether a declarative operating system produces measurable security improvements in a domestic home server context against documented baselines for mainstream alternatives.
 
 <References
   refs={[
     {
       id: 1,
-      text: "Muir, K. & Joinson, A. - An Exploratory Study Into the Negotiation of Cyber-Security Within the Family Home",
-      url: "https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2020.00424/full",
+      text: "Ofcom - Online Nation 2025 Report",
+      url: "https://www.ofcom.org.uk/research-statistics-and-data/online-research/online-nation/2025/online-nations-report-2025.pdf",
     },
     {
       id: 2,
-      text: "Gröber, L. - To Cloud or not to Cloud",
-      url: "https://www.usenix.org/system/files/usenixsecurity23-grober.pdf",
+      text: "Bispham, M., Creese, S., Dutton, W., Esteve-González, P. and Goldsmith, M. - Cybersecurity in Working from Home: An Exploratory Study",
+      url: "https://www.researchgate.net/publication/353661008",
     },
     {
       id: 3,
-      text: "Bispham, K. - Cybersecurity in Working from Home",
-      url: "https://www.researchgate.net/publication/353661008_Cybersecurity_in_Working_from_Home_An_Exploratory_Study",
-    },
-    {
-      id: 4,
-      text: "Stempel, J. (Reuters) - Microsoft's LinkedIn Sued for Disclosing Customer Information to Train AI Models",
-      url: "https://www.reuters.com/legal/microsofts-linkedin-sued-disclosing-customer-information-train-ai-models-2025-01-22/",
-    },
-    {
-      id: 5,
-      text: "Van der Sar, E. (TorrentFreak) - Anna's Archive Loses .LI Domain As Legal Pressure Mounts",
-      url: "https://torrentfreak.com/annas-archive-loses-li-domain-as-legal-pressure-mounts/",
-    },
-    {
-      id: 6,
-      text: "Evershed, N. (The Guardian) - 'It's Not Too Late to Fix It': Tim Berners-Lee on the Battle for the Soul of the Web",
-      url: "https://www.theguardian.com/technology/2026/jan/29/internet-inventor-tim-berners-lee-interview-battle-soul-web",
-    },
-    {
-      id: 7,
-      text: "Lohr, S. (New York Times) - He Created the Web. Now He's Trying to Redeem It.",
-      url: "https://www.nytimes.com/2021/01/10/technology/tim-berners-lee-privacy-internet.html",
-    },
-    {
-      id: 8,
-      text: "Information Commissioner's Office - Password manager provider fined £1.2m by ICO for data breach",
+      text: "Information Commissioner's Office - Password Manager Provider Fined £1.2m by ICO for Data Breach",
       url: "https://ico.org.uk/about-the-ico/media-centre/news-and-blogs/2025/12/password-manager-provider-fined/",
     },
     {
-      id:
-    }
-    {
-      id: 9,
-      text: "Johnson, J. et al (Google Cloud Blog) - 3CX Software Supply Chain Compromise Initiated by a Prior Software Supply Chain Compromise; Suspected North Korean Actor Responsible",
+      id: 4,
+      text: "Mandiant / Google Cloud - 3CX Software Supply Chain Compromise",
       url: "https://cloud.google.com/blog/topics/threat-intelligence/3cx-software-supply-chain-compromise",
     },
     {
+      id: 5,
+      text: "Federal Bureau of Investigation - North Korea Responsible for $1.5 Billion Bybit Hack",
+      url: "https://www.fbi.gov/investigate/cyber/alerts/2025/north-korea-responsible-for-1-5-billion-bybit-hack",
+    },
+    {
+      id: 6,
+      text: "Wiz Research - SAPwned: SAP AI Vulnerabilities",
+      url: "https://www.wiz.io/blog/sapwned-sap-ai-vulnerabilities-ai-security",
+    },
+    {
+      id: 7,
+      text: "Wiz Research - Critical NVIDIA AI Vulnerability",
+      url: "https://www.wiz.io/blog/wiz-research-critical-nvidia-ai-vulnerability",
+    },
+    {
+      id: 8,
+      text: "Wiz Research - 38 Terabytes of Private Data Accidentally Exposed by Microsoft AI Researchers",
+      url: "https://www.wiz.io/blog/38-terabytes-of-private-data-accidentally-exposed-by-microsoft-ai-researchers",
+    },
+    {
+      id: 9,
+      text: "HM Government / DSIT - Public Attitudes to Data and AI Tracker Survey, Wave 2",
+      url: "https://www.gov.uk/government/publications/public-attitudes-to-data-and-ai-tracker-survey-wave-2/public-attitudes-to-data-and-ai-tracker-survey-wave-2#trust-in-data-actors",
+    },
+    {
       id: 10,
-      text: "Schwartz, M. (Bank Info Security) - 36 Chrome Extensions Compromised in Supply Chain Attack",
-      url: "https://www.bankinfosecurity.com/36-chrome-extensions-compromised-in-supply-chain-attack-a-27207#",
+      text: "Immich - Self-hosted photo and video management",
+      url: "https://immich.app/",
     },
     {
       id: 11,
-      text: "Danielson, L. (Huntress) - Bybit Data Breach",
-      url: "https://www.huntress.com/threat-library/data-breach/bybit-cryptocurrency-exchange-data-breach",
+      text: "Ente - End-to-end encrypted cloud storage",
+      url: "https://ente.com/",
+    },
+    {
+      id: 12,
+      text: "Nextcloud - Self-hosted productivity platform",
+      url: "https://nextcloud.com/",
+    },
+    {
+      id: 13,
+      text: "Synology - Network Attached Storage",
+      url: "https://www.synology.com/en-eu",
+    },
+    {
+      id: 14,
+      text: "QNAP - Network Attached Storage",
+      url: "https://www.qnap.com/en",
+    },
+    {
+      id: 15,
+      text: "Proxmox Virtual Environment",
+      url: "https://www.proxmox.com/en/products/proxmox-virtual-environment/overview",
+    },
+    {
+      id: 16,
+      text: "Unraid - Storage operating system",
+      url: "https://unraid.net/",
+    },
+    {
+      id: 17,
+      text: "Dumas, D. (The Guardian) - 'It's not too late to fix it': web inventor Tim Berners-Lee says he is in a 'battle for the soul' of the internet",
+      url: "https://www.theguardian.com/technology/2026/jan/29/internet-inventor-tim-berners-lee-interview-battle-soul-web",
+    },
+    {
+      id: 18,
+      text: "Lohr, S. (New York Times) - He Created the Web. Now He's Out to Remake the Digital World",
+      url: "https://www.nytimes.com/2021/01/10/technology/tim-berners-lee-privacy-internet.html",
+    },
+    {
+      id: 19,
+      text: "Solid Community Group, W3C - Solid Protocol, Version 0.11.0",
+      url: "https://solidproject.org/TR/2024/protocol-20240512",
+    },
+    {
+      id: 20,
+      text: "Dodds, L. - Confused by Solid",
+      url: "https://blog.ldodds.com/2024/03/12/baffled-by-solid/",
+    },
+    {
+      id: 21,
+      text: "Verizon - Data Breach Investigations Report 2024",
+      url: "https://www.verizon.com/business/resources/reports/dbir/",
+    },
+    {
+      id: 22,
+      text: "Gröber, L. et al. - To Cloud or Not to Cloud: A Qualitative Study of How Self-Hosters Manage the Privacy and Security of Their Personal Data (USENIX Security 2023)",
+      url: "https://www.usenix.org/system/files/usenixsecurity23-grober.pdf",
+    },
+    {
+      id: 23,
+      text: "Ansible Documentation",
+      url: "https://docs.ansible.com/",
+    },
+    {
+      id: 24,
+      text: "HashiCorp - Infrastructure as Code: A Practitioner's Guide",
+      url: "https://developer.hashicorp.com/terraform/intro",
+    },
+    {
+      id: 25,
+      text: "Bae, C. et al. - Home Server for Home Digital Service Environments (IEEE, 2003)",
+      url: "https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=1261207",
+    },
+    {
+      id: 26,
+      text: "The Hacker News - QNAP Releases Patch for 2 Critical Flaws Threatening Your NAS Devices",
+      url: "https://thehackernews.com/2023/11/qnap-releases-patch-for-2-critical.html",
+    },
+    {
+      id: 27,
+      text: "Help Net Security - QNAP fixes OS command injection flaws (CVE-2023-47218, CVE-2023-50358)",
+      url: "https://www.helpnetsecurity.com/2024/02/14/cve-2023-47218-cve-2023-50358/",
+    },
+    {
+      id: 28,
+      text: "Unit 42, Palo Alto Networks - New Vulnerability in QNAP QTS Firmware: CVE-2023-50358",
+      url: "https://unit42.paloaltonetworks.com/qnap-qts-firmware-cve-2023-50358/",
+    },
+    {
+      id: 29,
+      text: "CERT-EU - QNAP NAS Zero-Day Vulnerabilities",
+      url: "https://cert.europa.eu/publications/security-advisories/2024-115/",
+    },
+    {
+      id: 30,
+      text: "CVEDetails - Proxmox Virtual Environment",
+      url: "https://www.cvedetails.com/product/64371/Proxmox-Virtual-Environment.html",
+    },
+    {
+      id: 31,
+      text: "Virtualization Howto - Top Security Hardening Steps for Proxmox VE 9",
+      url: "https://www.virtualizationhowto.com/2025/08/top-security-hardening-steps-for-proxmox-ve-9/",
+    },
+    {
+      id: 32,
+      text: "Dolstra, E. - The Purely Functional Software Deployment Model (PhD thesis, Utrecht University, 2006)",
+      url: "https://edolstra.github.io/pubs/phd-thesis.pdf",
     },
   ]}
 />
