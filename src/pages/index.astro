@@ -29,108 +29,111 @@ const projects = (await getCollection("projects", ({ data }) => !data.draft))
     <p
       style="max-width: 480px; font-size: 0.95rem; line-height: 1.8; margin-bottom: 1rem;"
     >
-      In the age of AI slop, rampant consumerism and the ever-erroding rights of
-      the digital user, the Internet has become dirty.
-    </p>
+      <p>
+        In the year 2044, Netwatch built the 'Blackwall', the final resort
+        against the old rampant Internet.
+      </p>
 
-    <p>
-      In the year 2044, Netwatch built the 'Blackwall', the final resort against
-      the old rampant Internet.
-    </p>
+      <p>
+        In this spirit, I am building my own sort of Blackwall. This self-hosted
+        server will act as a personal data-fortress, a refuge for information,
+        media and community.
+      </p>
+      <p>
+        This site also hosts my notes and projects. Here, my articles, projects
+        and useful resources I've found. Some projects are concepts but I intend
+        to finish about one per month (as I need a paycheck to purchase
+        hardware).
+      </p>
 
-    <p>
-      In this spirit, I am building my own sort of Blackwall. This self-hosted
-      server will act as a personal data-fortress, a refuge for information,
-      media and community.
-    </p>
+      <hr />
 
-    <hr />
-
-    <!-- Recent Articles -->
-    <div style="margin-top: 2rem;">
-      <div class="section-label">Recent Articles</div>
-      <ul class="index-list">
-        {
-          articles.map((entry) => (
-            <li>
-              <a href={`/articles/${entry.slug}`}>
-                <span class="item-title">{entry.data.title}</span>
-              </a>
-              <span class="item-meta">{entry.data.date}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <div style="margin-top: 1rem;">
-        <a
-          href="/articles"
-          class="mono text-dim"
-          style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;"
-        >
-          All articles →
-        </a>
-      </div>
-    </div>
-
-    <!-- Recent Projects -->
-    <div style="margin-top: 3rem;">
-      <div class="section-label">Projects</div>
-      <ul class="index-list">
-        {
-          projects.map((entry) => (
-            <li>
-              <a href={`/projects/${entry.slug}`}>
-                <span class="item-title">{entry.data.title}</span>
-              </a>
-              <span class="item-meta">{entry.data.status}</span>
-            </li>
-          ))
-        }
-      </ul>
-      <div style="margin-top: 1rem;">
-        <a
-          href="/projects"
-          class="mono text-dim"
-          style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;"
-        >
-          All projects →
-        </a>
-      </div>
-    </div>
-
-    <!-- Navigation grid -->
-    <div
-      style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);"
-    >
-      {
-        [
+      <!-- Recent Articles -->
+      <div style="margin-top: 2rem;">
+        <div class="section-label">Recent Articles</div>
+        <ul class="index-list">
           {
-            href: "/knowledge",
-            label: "Knowledge",
-            desc: "Notes and references",
-          },
-          {
-            href: "/resources",
-            label: "Resources",
-            desc: "Curated links and tools",
-          },
-        ].map((item) => (
+            articles.map((entry) => (
+              <li>
+                <a href={`/articles/${entry.slug}`}>
+                  <span class="item-title">{entry.data.title}</span>
+                </a>
+                <span class="item-meta">{entry.data.date}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div style="margin-top: 1rem;">
           <a
-            href={item.href}
-            style="display: block; background: var(--bg); padding: 1.2rem; text-decoration: none; border: none; transition: background 0.15s;"
+            href="/articles"
+            class="mono text-dim"
+            style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;"
           >
-            <div
-              class="mono"
-              style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem;"
-            >
-              {item.label}
-            </div>
-            <div style="font-size: 0.8rem; color: var(--fg-dim); font-family: var(--font-sans);">
-              {item.desc}
-            </div>
+            All articles →
           </a>
-        ))
-      }
-    </div>
+        </div>
+      </div>
+
+      <!-- Recent Projects -->
+      <div style="margin-top: 3rem;">
+        <div class="section-label">Projects</div>
+        <ul class="index-list">
+          {
+            projects.map((entry) => (
+              <li>
+                <a href={`/projects/${entry.slug}`}>
+                  <span class="item-title">{entry.data.title}</span>
+                </a>
+                <span class="item-meta">{entry.data.status}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <div style="margin-top: 1rem;">
+          <a
+            href="/projects"
+            class="mono text-dim"
+            style="font-size: 0.75rem; letter-spacing: 0.08em; text-transform: uppercase;"
+          >
+            All projects →
+          </a>
+        </div>
+      </div>
+
+      <!-- Navigation grid -->
+      <div
+        style="margin-top: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--border);"
+      >
+        {
+          [
+            {
+              href: "/projects",
+              label: "Projects",
+              desc: "Things I'm building",
+            },
+            {
+              href: "/resources",
+              label: "Resources",
+              desc: "Curated links and tools",
+            },
+          ].map((item) => (
+            <a
+              href={item.href}
+              style="display: block; background: var(--bg); padding: 1.2rem; text-decoration: none; border: none; transition: background 0.15s;"
+            >
+              <div
+                class="mono"
+                style="font-size: 0.8rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.3rem;"
+              >
+                {item.label}
+              </div>
+              <div style="font-size: 0.8rem; color: var(--fg-dim); font-family: var(--font-sans);">
+                {item.desc}
+              </div>
+            </a>
+          ))
+        }
+      </div>
+    </p>
   </div>
 </BaseLayout>

@@ -157,39 +157,45 @@ declare module 'astro:content' {
   slug: "groves";
   body: string;
   collection: "articles";
-  data: InferEntrySchema<"articles">
+  data: any
 } & { render(): Render[".md"] };
 "selfhosting.mdx": {
 	id: "selfhosting.mdx";
   slug: "selfhosting";
   body: string;
   collection: "articles";
-  data: InferEntrySchema<"articles">
+  data: any
 } & { render(): Render[".mdx"] };
 };
-"knowledge": {
-"NixOS.md": {
-	id: "NixOS.md";
-  slug: "nixos";
+"knowledge": Record<string, {
+  id: string;
+  slug: string;
   body: string;
   collection: "knowledge";
-  data: InferEntrySchema<"knowledge">
-} & { render(): Render[".md"] };
-};
+  data: any;
+  render(): Render[".md"];
+}>;
 "projects": {
 "Blackwall.md": {
 	id: "Blackwall.md";
   slug: "blackwall";
   body: string;
   collection: "projects";
-  data: InferEntrySchema<"projects">
+  data: any
+} & { render(): Render[".md"] };
+"Caduceus.md": {
+	id: "Caduceus.md";
+  slug: "caduceus";
+  body: string;
+  collection: "projects";
+  data: any
 } & { render(): Render[".md"] };
 "Canto.md": {
 	id: "Canto.md";
   slug: "canto";
   body: string;
   collection: "projects";
-  data: InferEntrySchema<"projects">
+  data: any
 } & { render(): Render[".md"] };
 };
 "resources": {
@@ -198,14 +204,14 @@ declare module 'astro:content' {
   slug: "hundred-rabbits";
   body: string;
   collection: "resources";
-  data: InferEntrySchema<"resources">
+  data: any
 } & { render(): Render[".md"] };
 "nixos.md": {
 	id: "nixos.md";
   slug: "nixos";
   body: string;
   collection: "resources";
-  data: InferEntrySchema<"resources">
+  data: any
 } & { render(): Render[".md"] };
 };
 
@@ -217,5 +223,5 @@ declare module 'astro:content' {
 
 	type AnyEntryMap = ContentEntryMap & DataEntryMap;
 
-	export type ContentConfig = typeof import("../../src/content/config.js");
+	export type ContentConfig = never;
 }

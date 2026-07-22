@@ -18,21 +18,26 @@ The naming can be confusing intially but it's simple. There are three devices cr
 
 The names are drawn from Cyberpunk 2077. A rogue and talented hacker named Rache Bartmoss develops and releases viruses upon the internet. These viruses cause AIs across the world to go rogue and leads to the internet being overrun and made unusable. Elysia is the name of his personal cyberdeck (computer) and was his weapon against the corporations.
 
-The Blackwall is also from Cyberpunk 2077 and is the name of the firewall that stops these AI from breaching the new internet. Given it sits between the internet, ravaged and made unusable by AI, it's a fitting name for this project. Given that the Blackwall is actually an AI itself, this is also ironic given that AI has been a useful troubleshooting tool in this project.
+The Blackwall is also from Cyberpunk 2077 and is the name of the firewall that stops these AI from breaching the new internet. Given it sits between the old Internet, ravaged and made unusable by AI, it's a fitting name for this project.
 
-Canto is the name of a Cyberdeck and gives the player the ability to 'open' the Blackwall and allow the rogue AIs of the old internet to hack and kill an opponent. It is the device most used to access and maintain the Blackwall project making it a fitting name.
+Canto is the name of a Cyberdeck and gives the player the ability to 'open' the Blackwall and allow the rogue AIs of the old internet to hack and kill an opponent. It is my laptop and my most used method of accessing the Blackwall server.
 
-## Why?
+Elysia is my desktop PC. It's name comes from Rache Bartmoss' cyberdeck, the device he used to release a virus that destroyed the old Internet. Given the conclusion of my academic studies, it's used more recreationally these days.
 
-In today's age of AI, advertising and data harvesting, I want to create my own 'data fortress' and carve out my pocket of the internet.
+## Why
+
+In today's age of AI, advertising and data harvesting, I want to create my own 'data fortress' and carve out my pocket of the internet. Here, data, media and other content is kept safe from corporate and federal control.
 
 ## What it does
 
 It hosts the following services:
 
+- TailScale
+- Arr\* suite stack (Jellyseerr, Radarr, Sonarr & co)
+
+## Planned potential services
+
 - DNS sinkhole
-- Media server (Jellyfin, Jellyseer, Radarr, Sonarr ,)
-- NAS
 - Git server
 - vscode web server/coder
 - Authentik
@@ -54,27 +59,14 @@ It hosts the following services:
 
 ## How it works
 
-By using a hypervisor, we can create a segmented server, also providing dynamic resource adjustment.
-The machine's OS, software etc is declared via an Ansible configuration meaning replicating an identical server is trivial.
-Given that the Blackwall's Ansible template is public, anyone can create their own Blackwall.
+The server runs NixOS. It's config can be found <a href="https://www.github.com/tmangan64/Blackwall">here</a>.
 
 The specification of the prototype machine is:
 
 ```
-Brand               Beelink
-OS                  Proxmox
-CPU                 Intel Celeron 3.4GHz
-RAM                 12GB
-Memory Speed        4800MHz
-Storage             1x 1TB
-Storage Capacity    6x NVMe
+TBC
 ```
-
-## Software used
-
-- **DNS Sinkhole** - AdGuard Home
-- **Media Server** - Jellyfin stack
 
 ## Status
 
-This project is also my undergrad thesis. It is a WIP.
+This project was part of my undergrad thesis. It is a WIP.
