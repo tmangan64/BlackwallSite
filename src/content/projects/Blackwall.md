@@ -1,6 +1,6 @@
 ---
 title: Blackwall
-description: All-in-one Homelab
+description: Not the website, the server host
 date: "5-3-2026"
 tags: [self-hosting]
 status: wip
@@ -8,13 +8,21 @@ url: https://blackwall.cam
 repo: https://github.com/tmangan64/Blackwall
 ---
 
+# Introduction
+
+```
+'blackwall.cam' is named after the Blackwall server and is a separate project
+```
+
 The Blackwall is a network centralised around a single server. The goal is to increase digital independence by self-hosting. Each device on the network (inlcuding central node) runs NixOS.
 
-The naming can be confusing intially but it's simple. There are three devices creating this network:
+There are three hosts on the network:
 
-- Elysia, desktop
-- Canto, laptop
-- Blackwall, server
+| Name | Hardware | Description|
+|------|----------|------------|
+| Elysia | Desktop | Development and productivity device |
+| Canto | Laptop | Experimental and development device |
+| Blackwall | Server | Service and data hosting device |
 
 The names are drawn from Cyberpunk 2077. A rogue and talented hacker named Rache Bartmoss develops and releases viruses upon the internet. These viruses cause AIs across the world to go rogue and leads to the internet being overrun and made unusable. Elysia is the name of his personal cyberdeck (computer) and was his weapon against the corporations.
 
@@ -24,49 +32,26 @@ Canto is the name of a Cyberdeck and gives the player the ability to 'open' the 
 
 Elysia is my desktop PC. It's name comes from Rache Bartmoss' cyberdeck, the device he used to release a virus that destroyed the old Internet. Given the conclusion of my academic studies, it's used more recreationally these days.
 
-## Why
+It currently hosts the following services:
 
-In today's age of AI, advertising and data harvesting, I want to create my own 'data fortress' and carve out my pocket of the internet. Here, data, media and other content is kept safe from corporate and federal control.
-
-## What it does
-
-It hosts the following services:
-
-- TailScale
-- Arr\* suite stack (Jellyseerr, Radarr, Sonarr & co)
+- TailScale (with caddy addon)
+- Arr* suite stack (Jellyseerr, Radarr, Sonarr & co)
+- Homepage
 
 ## Planned potential services
 
-- DNS sinkhole
-- Git server
-- vscode web server/coder
-- Authentik
-- n8n
-- Outline
-- Nextcloud
-- Pterodactyl
-- Home-Assistant
-- Firefly III
-- Uptime Kuma
-- CyberChef
-- Bookstack
-- Kaizoku
-- Homepage
-- pad.ws
-- fmhy clone
-- Memos
-- A few more TBA
+| Service | Purpose |
+|---------|---------|
+| Adguard Home | DNS Sinkhole |
+| Forgejo | Git repository hosting |
+| code-server | Browser-hosted IDE |
+| n8n | AI-powered automation and workflows |
+| Outline | Document hosting |
+| Nextcloud | File hosting |
+| Pterodactyl | Game server hosting |
+| Actual Budget | Finance tracking app |
+| pad.ws | Browser whiteboard app |
 
 ## How it works
 
 The server runs NixOS. It's config can be found <a href="https://www.github.com/tmangan64/Blackwall">here</a>.
-
-The specification of the prototype machine is:
-
-```
-TBC
-```
-
-## Status
-
-This project was part of my undergrad thesis. It is a WIP.
