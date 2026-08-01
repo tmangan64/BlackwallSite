@@ -159,6 +159,13 @@ declare module 'astro:content' {
   collection: "articles";
   data: any
 } & { render(): Render[".md"] };
+"security.md": {
+	id: "security.md";
+  slug: "security";
+  body: string;
+  collection: "articles";
+  data: any
+} & { render(): Render[".md"] };
 "selfhosting.mdx": {
 	id: "selfhosting.mdx";
   slug: "selfhosting";
@@ -167,14 +174,6 @@ declare module 'astro:content' {
   data: any
 } & { render(): Render[".mdx"] };
 };
-"knowledge": Record<string, {
-  id: string;
-  slug: string;
-  body: string;
-  collection: "knowledge";
-  data: any;
-  render(): Render[".md"];
-}>;
 "projects": {
 "Blackwall.md": {
 	id: "Blackwall.md";
@@ -197,6 +196,13 @@ declare module 'astro:content' {
   collection: "projects";
   data: any
 } & { render(): Render[".md"] };
+"Orpheus.md": {
+	id: "Orpheus.md";
+  slug: "orpheus";
+  body: string;
+  collection: "projects";
+  data: any
+} & { render(): Render[".md"] };
 };
 "resources": {
 "hundred-rabbits.md": {
@@ -209,6 +215,13 @@ declare module 'astro:content' {
 "nixos.md": {
 	id: "nixos.md";
   slug: "nixos";
+  body: string;
+  collection: "resources";
+  data: any
+} & { render(): Render[".md"] };
+"permacomputing.md": {
+	id: "permacomputing.md";
+  slug: "permacomputing";
   body: string;
   collection: "resources";
   data: any
