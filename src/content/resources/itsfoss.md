@@ -3,5 +3,5 @@ title: It's FOSS
 description: Blog site for open source projects
 url: https://itsfoss.com/
 type: websites
-tags: [software]
+tags: [self-hosting]
 ---
