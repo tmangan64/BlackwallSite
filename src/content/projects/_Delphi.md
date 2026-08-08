@@ -12,23 +12,6 @@ This project consists of two devices. A Spotify Desk Thing device will be used a
 
 'Delphi' was the name of one of Apollo's oracles. This project uses that name as it provides information as well as supports music.
 
-##
-
 This project requires a Spotify Car Thing device which can be obtained from American ebay suppliers for about £90.
 
-## List
-
-- Lorem ipsum dolor sit amet
-- Consectetur adipiscing elit
-- Sed do eiusmod tempor incididunt
-- Ut labore et dolore magna aliqua
-
-## Code block placeholder
-
-```
-code block placeholder
-```
-
-## Misc
-
-Lorem ipsum dolor sit amet. Updated periodically.
+I intend to proceed with this project after 
