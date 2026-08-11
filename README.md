@@ -9,5 +9,11 @@ This website is my portfolio and represents my own thoughts and works.
 - Correct spellings on home server framework article
 - add unlisted app project
 
-- re-write pandora essay
-- 
+## Project inspirations/notes:
+- https://www.crowdsupply.com/talisman-design/pocketmage
+- https://www.crowdsupply.com/cardona-bits/haxophone
+- https://www.crowdsupply.com/eurolan-ltd/ggtag
+- https://www.crowdsupply.com/mnt/mnt-reform-next
+- https://www.crowdsupply.com/machinery-enchantress/the-new-essential-guide-to-electronics-in-shenzhen
+- https://www.crowdsupply.com/sqfmi/watchy
+- https://www.crowdsupply.com/networked-artifacts/air-lab
