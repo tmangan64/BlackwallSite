@@ -6,7 +6,7 @@ tags: [experiment]
 status: wip
 ---
 
-'Netdriver' is the name of a high-level cyberdeck from Cyberpunk 2077. The only other cyberdeck at this tier, is <a href="./canto">Canto</a>.
+'Netdriver' is the name of a high-level cyberdeck from Cyberpunk 2077. The only other cyberdeck at this tier, is <a href="../canto">Canto</a>.
 
 # Previous work
 
