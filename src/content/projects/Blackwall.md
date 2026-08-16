@@ -4,7 +4,7 @@ description: Not the website, the server host
 date: "5-3-2026"
 tags: [self-hosting]
 status: wip
-link: https://docs.blackwall.cam/
+repo: https://docs.blackwall.cam/
 ---
 
 'blackwall.cam' is a separate project, named after this Server.
