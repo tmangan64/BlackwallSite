@@ -1,23 +1,33 @@
 ---
 title: Groves
-description: A brief introduction to GroveOS and the Ley Lines
+description: Proposal for dedicated Home Server operating system
 date: "16-7-2026"
 tags: [concept, self-hosting]
 ---
 
-## The Problem
+# Background
 
-Current methods of self-hosting and decentralisation of infrastructure place a heavy burden on the invididual. A user must not only build but maintain software that may take specialist software to do so. My own undergrad thesis focused on attempting to make this easier with NixOS-based 'templates' for home servers.
+It is my firm belief that the seizure of digital sovereignty and responsibility from "big tech" is crucial for global wellbeing. Time and time again these companies have demonstrated that they cannot be trusted to protect our information or our best interests; the decline of physical media has handed corporations the ability to sell a product without transferring ownership to the buyer [See Sony] whilst our reliance on these companies has allowed them to disregard the regulations designed to protect us.
 
-## Proposed Solution
+In response, some individuals have turned to hosting their own data on their own computers within their own homes. This is great for us few as we live our lives knowing our photos and emails live within our controlled domains but there remains a problem, being that a vocal minority is still a minority. 
 
-I propose an operating system named 'GroveOS'. It functions as:
+"If everyone would just learn how to self-host a server, we may retake control of our digital lives"
+
+At no point in time, in the history of humanity as "everyone just". The general public cannot be expected to reclaim that responsibility when we, the technical community, have not made it easy. Old Terry, down the road, is not going to open his BIOS and install a headless Ubuntu server to host his Nextcloud library. Given this, I conducted my undergrad thesis on home servers, specifically making a NixOS config generator, allowing for easy creation and distribution of secure NixOS flakes for home servers but this does not solve the underlying issue of technical complexity.
+
+# Proposed Solution
+
+I propose an Operating System called "Grove" (or GroveOS). It's goal is to make the installation, configuration and maintenance of a domestic home server as easy as possible for the end user.
+
+***
+**Unfinished content below**
+
+It functions as:
 
 - personal data store
 - identity provider
 - media server
 - communications hub
-- family archive
 - gateway to the Grove network via Ley Lines
 
 ## Ley Lines
