@@ -6,7 +6,7 @@ tags: [nixos, self-hosted]
 status: wip
 ---
 
-The name 'Canto' is inspired from the late-game item from _Cyberpunk 2077_. It is a high-level cyberdeck allowing the user to call upon the Blackwall.
+The name 'Canto' is inspired from the late-game item from _Cyberpunk 2077_. It is a high-level cyberdeck allowing the user to access the Blackwall. Today, it's the name of my development laptop, from which this website and all my other projects have been created.
 
 ## Hardware
 

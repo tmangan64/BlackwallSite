@@ -1,6 +1,6 @@
 ---
-title: Pandora's Box
-description: LLMs and the Dead Internet Theory
+title: On the Internet's Death
+description: LLMs and the Fight for the Internet
 date: "30-7-2026"
 tags: [thoughts]
 ---

@@ -13,13 +13,16 @@ In response, some individuals have turned to hosting their own data on their own
 
 "If everyone would just learn how to self-host a server, we may retake control of our digital lives"
 
-At no point in time, in the history of humanity as "everyone just". The general public cannot be expected to reclaim that responsibility when we, the technical community, have not made it easy. Old Terry, down the road, is not going to open his BIOS and install a headless Ubuntu server to host his Nextcloud library. Given this, I conducted my undergrad thesis on home servers, specifically making a NixOS config generator, allowing for easy creation and distribution of secure NixOS flakes for home servers but this does not solve the underlying issue of technical complexity.
+At no point in time, in the history of humanity as "everyone just". The general public cannot be expected to reclaim that responsibility when we, the technical community, have not made it easy. Old Terry, down the road, is not going to open his BIOS and install a headless Ubuntu server to host his Nextcloud library. Given this, I conducted my undergrad thesis on home servers, specifically making a NixOS config generator, allowing for easy creation and distribution of secure NixOS flakes for home servers.
+
+This does not solve the underlying issue of technical complexity.
 
 # Proposed Solution
 
-I propose an Operating System called "Grove" (or GroveOS). It's goal is to make the installation, configuration and maintenance of a domestic home server as easy as possible for the end user.
+I propose an Operating System called "Grove" (or GroveOS). It's goal is to make the installation, configuration and maintenance of a domestic home server as easy as possible for the end user by compiling all features into a single dedicated Operating System.
 
 ***
+
 **Unfinished content below**
 
 It functions as:
@@ -40,7 +43,7 @@ Ley Lines are the name of the communication protocol used by Groves. They define
 - how data is encrypted
 - how data is transmitted between groves
 
-A Ley Line is not a relay network and does not route third-party software. Communications between two groves is never bounced through another.
+Groves communicate by first identifying each other, then each device creates a temporary VM connected to a VPN, in which the other device's VM is also connected. This provides secure, private and controllable communication between nodes.
 
 ## Grove Discovery
 
