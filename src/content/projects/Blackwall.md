@@ -47,4 +47,4 @@ Some may have noticed the names are drawn from Cyberpunk 2077. The *Blackwall* i
 
 # That's it? This is your only project?
 
-<a href="/articles/2026-Nov">No</a>
+<a href="/articles/2026-nov">No</a>

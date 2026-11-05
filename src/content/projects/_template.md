@@ -10,7 +10,7 @@ repo: https://github.com/username/repository
 
 Introduction goes here:
 
-## Header
+# Overview
 
 Detailed description goes here
 
